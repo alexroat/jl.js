@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+.jlexclude{
+    background:rgb(237, 239, 241);
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor:default;
+}
+
+
+.jlbutton
+{
+cursor:default;
+padding: 10px;
+border: 1px solid darkgray;
+border-radius: 5px;
+}
+
+
+.jlaccordionflap
+{
+border: 1px solid darkgray;
+background:rgb(217, 230, 238);
+}
+
+
+span.jlflaps {
+border: 1px solid gray;
+margin: 1px;
+padding: 3px;
+cursor: pointer;
+background-color: whitesmoke;
+font-family: cursive;
+font-weight: 700;
+position:relative;
+bottom:-6px;
+}
+
+
+.HalfCircleLeft
+{
+    margin: 100px;
+    height: 100px;
+    width: 50px;
+    border-radius: 0 50px 50px 0;
+    background-color: #cfa040;
+    position: relative;
+}
+
+
+.nicepanel
+{
+border: 1px solid darkgrey;
+margin:5px;
+}
+
+
+</style>
+<script type="text/javascript" src="jl.js"> </script>
+
+
+<script type="text/javascript">
+window.onload=function()
+{
+	jl();
+}
+</script>
+</head>
+<body layout="sz:'fullpage'">
+		<div layout="sz:'box'">
+			<div id="accordion" layout="s:100,sz:'accordion'">
+                    <div>first</div>
+				    <div>second</div>
+                    <div>third</div>
+				    <div>fourth</div>
+            </div>
+			<div layout="s:200,sz:'split',dir:'v'">
+                <div style="border:1px solid black;padding:5px;margin:5px;">ciao</div>
+                <div style="border:1px solid black;padding:5px;margin:5px;">mondo</div>
+            </div>
+			<div layout="p:1,sz:'split',dir:'v'">
+				<div layout="sz:'split',dir:'h'">
+				    <div id="accordion" layout="s:100,sz:'accordion'" class="nicepanel">
+                        <div>first</div>
+				        <div>second</div>
+                        <div>third</div>
+				        <div>fourth</div>
+                    </div>
+				    <div layout="sz:'sequence',dir:'h'" class="nicepanel">
+                        <div>first</div>
+				        <div>second</div>
+                        <div>third</div>
+				        <div>fourth</div>
+                    </div>
+                </div>
+				<div layout="sz:'tabs',dir:'h'" class="nicepanel">
+                    <div>first</div>
+				    <div>second</div>
+                    <div>third</div>
+				    <div>fourth</div>
+                </div>
+			</div>
+		</div>
+        <div layout="sz:'dialog'">
+            <div layout="sz:'accordion'">
+                    <div layout="sz:'sequence',dir:'h'">
+                        <div>first</div>
+				        <div>second</div>
+                        <div>third</div>
+				        <div>fourth</div>
+                    </div>
+				    <div>second</div>
+                    <div>third</div>
+				    <div>fourth</div>
+            </div>
+        </div>
+</body>
+</html>
+ 
+ 
+ 
+ 
+ 
+ 
