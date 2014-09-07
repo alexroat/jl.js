@@ -412,17 +412,34 @@ jl.fn.accordion=function(e)
 jl.fn.snap=function(e)
 {
     var ll=jl.getLayout(e);
+    var s=jl.getSizes(e);
     ll.stepx=parseInt(ll.stepx)||24;
     ll.marginx=parseInt(ll.marginx)||4;
     ll.stepy=parseInt(ll.stepy)||24;
     ll.marginy=parseInt(ll.marginy)||4;
+    var ox=0;
+    var oy=0;
+    var dw=ll.stepx+2*ll.marginx;
+    var dh=ll.stepy+2*ll.marginy;
+    var maxny=0;
     for (var j=0;j<e.children.length;j++)
     {
         var c=e.children[j];
         var cll=jl.getLayout(c);
-        cll.nx=parseInt(cll.nx)||24;
-        cll.ny=parseInt(cll.ny)||4;
-
+        cll.nx=parseInt(cll.nx)||1;
+        cll.ny=parseInt(cll.ny)||1;
+        cs=jl.getSizes(c);
+        var nox=ox+cll.nx;
+        if (nox*dw>s.width && ox>0)
+        {
+            ox=0;
+            nox=ox+cll.nx;
+            oy+=maxny;
+            maxny=cll.ny;
+        }
+        jl.setStyle(c,{position:"absolute",left:(ox*dw+ll.marginx)+"px",top:(oy*dh+ll.marginy)+"px",width:(cll.nx*dw-2*ll.marginx)+"px",height:(cll.ny*dh-2*ll.marginy)+"px"});
+        maxny=cll.ny>maxny?cll.ny:maxny;
+        ox=nox;
     }
 
 }
