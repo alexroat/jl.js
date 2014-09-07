@@ -437,7 +437,9 @@ jl.fn.snap=function(e)
             oy+=maxny;
             maxny=cll.ny;
         }
-        jl.setStyle(c,{position:"absolute",left:(ox*dw+ll.marginx)+"px",top:(oy*dh+ll.marginy)+"px",width:(cll.nx*dw-2*ll.marginx)+"px",height:(cll.ny*dh-2*ll.marginy)+"px"});
+        console.log(c);
+        console.log([ox,oy,dw,dh,cll.nx,cll.ny,cs.deltaWidth,cs.deltaHeight,cll.nx*dw-2*ll.marginx-cs.deltaWidth,cll.ny*dh-2*ll.marginy-  cs.deltaHeight]);
+        jl.setStyle(c,{position:"absolute",left:(ox*dw+ll.marginx)+"px",top:(oy*dh+ll.marginy)+"px",width:(cll.nx*dw-2*ll.marginx-cs.deltaWidth)+"px",height:(cll.ny*dh-2*ll.marginy-  cs.deltaHeight)+"px",overflow:"hidden"});
         maxny=cll.ny>maxny?cll.ny:maxny;
         ox=nox;
     }
