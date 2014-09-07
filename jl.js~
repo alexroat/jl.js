@@ -422,7 +422,7 @@ jl.fn.snap=function(e)
         var cll=jl.getLayout(c);
         cll.nx=parseInt(cll.nx)||24;
         cll.ny=parseInt(cll.ny)||4;
-        
+
     }
 
 }
