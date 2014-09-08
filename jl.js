@@ -443,6 +443,52 @@ jl.fn.snap=function(e)
     }
 
 }
+//smart : smart place children along a grid
+jl.fn.smart=function(e)
+{
+    var ll=jl.getLayout(e);
+    var s=jl.getSizes(e);
+    ll.stepx=parseInt(ll.stepx)||24;
+    ll.marginx=parseInt(ll.marginx)||4;
+    ll.stepy=parseInt(ll.stepy)||24;
+    ll.marginy=parseInt(ll.marginy)||4;
+    var dw=ll.stepx+2*ll.marginx;
+    var dh=ll.stepy+2*ll.marginy;
+    var map={}
+    for (var j=0;j<e.children.length;j++)
+    {
+        var c=e.children[j];
+        var cll=jl.getLayout(c);
+        cll.nx=parseInt(cll.nx)||1;
+        cll.ny=parseInt(cll.ny)||1;
+        cs=jl.getSizes(c);
+        var lim=s.width/dw;
+        var go=true;
+        for (var iy=0;go;iy++)
+            for (var ix=0;go&&ix<lim;ix++)
+            {
+                //ricerca degli slot sulla mappa
+                var ok=true;
+                for (var ty=0;ok&&ty<cll.ny;ty++)
+                    for (var tx=0;ok&&tx<cll.nx;tx++)
+                        ok=!(((ix+tx)+","+(iy+ty)) in map) && (ix==0 || (1+ix+tx)<lim);
+                //se trova lo spazio piazza l'elemento
+                if (ok)
+                {
+                    for (var ty=0;ok&&ty<cll.ny;ty++)
+                        for (var tx=0;ok&&tx<cll.nx;tx++)
+                            map[((ix+tx)+","+(iy+ty))]=1;
+                    go=false;
 
+                    jl.setStyle(c,{position:"absolute",left:(ix*dw+ll.marginx)+"px",top:(iy*dh+ll.marginy)+"px",width:(cll.nx*dw-2*ll.marginx-cs.deltaWidth)+"px",height:(cll.ny*dh-2*ll.marginy-  cs.deltaHeight)+"px",overflow:"hidden"});
+
+
+                }
+            }
+    }
+
+    console.log(map);
+
+}
 
 
