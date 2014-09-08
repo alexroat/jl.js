@@ -486,9 +486,6 @@ jl.fn.smart=function(e)
                 }
             }
     }
-
-    console.log(map);
-
 }
 
 

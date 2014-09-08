@@ -471,7 +471,7 @@ jl.fn.smart=function(e)
                 var ok=true;
                 for (var ty=0;ok&&ty<cll.ny;ty++)
                     for (var tx=0;ok&&tx<cll.nx;tx++)
-                        ok=!(((ix+tx)+","+(iy+ty)) in map) && (ix==0 || (ix+tx)<lim);
+                        ok=!(((ix+tx)+","+(iy+ty)) in map) && (ix==0 || (1+ix+tx)<lim);
                 //se trova lo spazio piazza l'elemento
                 if (ok)
                 {
