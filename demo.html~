@@ -27,10 +27,18 @@ border-radius: 5px;
 }
 
 
+
+.dialogheader
+{
+background: rgb(61, 119, 192);
+color: whitesmoke;
+font-weight: bolder;
+font-size: larger;
+}
+
 .jlaccordionflap
 {
 border: 1px solid darkgray;
-background:rgb(217, 230, 238);
 }
 
 
@@ -44,7 +52,7 @@ background:rgb(217, 230, 238);
 }
 
 
-.tabheader > div.selected
+div.selected
 {
     background:rgb(122, 156, 172);
     color:white;
@@ -152,7 +160,7 @@ window.onload=function()
                 </div>
             </div>
 		</div>
-        <div id="flap" layout="s:200,sz:'tabs',dir:'bottom'" style="border:1px solid lightgrey;margin:2px;">
+        <div id="flap" layout="s:200,sz:'tabs',dir:'right'" style="border:1px solid lightgrey;margin:2px;">
             <div>first</div>
 		    <div>second</div>
             <div>third</div>

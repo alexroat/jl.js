@@ -13,10 +13,10 @@ function jl(e)
 		jl(e.children[i]);
 }
 jl.create=function(tag,attr){var e = document.createElement(tag);for (var k in attr) e.setAttribute(k,attr[k]);return e;};
-jl.map=function(f,s){r=[]; for (i in s) r.push(f.apply(null,[s[i]])); return r;};
+jl.map=function(f,s){r=[]; for (var i in s) r.push(f.apply(null,[s[i]])); return r;};
 jl.getLayout=function(e){try {return eval("[{"+(e.getAttribute("layout")||"")+"}]")[0];}catch (ex){ return {};}};
 jl.setLayout=function(e,ll){var r=JSON.stringify(ll);e.setAttribute("layout",r.substr(1,r.length-2));};
-jl.setStyle=function(e,style){for (s in style) e.style[s]=style[s];};
+jl.setStyle=function(e,style){for (var s in style) e.style[s]=style[s];};
 jl.getOuterWidth=function(e){
     var s=jl.getStyle(e);
     var x = e.offsetWidth;
@@ -131,6 +131,7 @@ jl.fn.dialog=function(e){
    		e.layout={};
         e.layout.header=document.createElement("div");
         e.appendChild(e.layout.header);
+        jl.toggleClass(e.layout.header,"dialogheader");
         jl.toggleClass(e.layout.header,"jlexclude");
         e.layout.header.textContent="dialog";
         jl.setStyle(e.layout.header,{position:"absolute",top:"0px",left:"0px",right:"0px"});
@@ -430,10 +431,10 @@ jl.fn.accordion=function(e)
 	{
    		e.layout={};
         e.layout.flaps=[];
-        var cc=jl.children(e);
-        for (var i=0;i<cc.length;i++)
+        e.layout.cc=jl.children(e);
+        for (var i=0;i<e.layout.cc.length;i++)
         {
-            var c=cc[i];
+            var c=e.layout.cc[i];
             var flap=document.createElement("div");
             e.layout.flaps.push(flap);
             flap.textContent="tab "+i;
@@ -444,7 +445,7 @@ jl.fn.accordion=function(e)
         }
     }
     //calcola il resto
-    var h=e.offsetHeight;
+    var h=jl.getSizes(e).height;
     for (var i=0;i<e.layout.flaps.length;i++)
         h-=jl.getSizes(e.layout.flaps[i]).totHeight;
     var offs=0;
@@ -456,9 +457,20 @@ jl.fn.accordion=function(e)
         if (!jl.hasClass(c,"jlexclude"))
         {
             jl.setStyle(c,{"height":(issel?(h-jl.getSizes(c).deltaHeight):0)+"px"});
+
+            var flap=e.layout.flaps[i];
+            var flapsel=jl.hasClass(flap,"selected");
+            if ((flapsel && !issel) || (!flapsel && issel))
+                jl.toggleClass(flap,"selected");
+
+
             i++;
         }
-        offs+=c.offsetHeight;
+        offs+=jl.getSizes(c).totHeight;
+
+
+       
+
     }
 }
 //snap : grid based fluid layout
