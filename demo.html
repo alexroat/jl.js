@@ -34,7 +34,23 @@ background:rgb(217, 230, 238);
 }
 
 
-span.jlflaps {
+
+.tabheader > div
+{
+    background:whitesmoke;
+    cursor: pointer;
+    border:1px solid gray;
+    padding:3px;
+}
+
+
+.tabheader > div.selected
+{
+    background:rgb(122, 156, 172);
+    color:white;
+}
+
+/*span.jlflaps {
 border: 1px solid gray;
 margin: 1px;
 padding: 3px;
@@ -44,7 +60,7 @@ font-family: cursive;
 font-weight: 700;
 position:relative;
 bottom:-6px;
-}
+}*/
 
 
 .HalfCircleLeft
@@ -77,133 +93,139 @@ window.onload=function()
 </script>
 </head>
 <body layout="sz:'fullpage'">
-		<div layout="sz:'box'">
-			<div id="accordion" layout="s:100,sz:'accordion'">
+	<div layout="sz:'box'">
+		<div id="accordion" layout="s:100,sz:'accordion'">
+                <div>first</div>
+			    <div>second</div>
+                <div>third</div>
+			    <div>fourth</div>
+        </div>
+		<div layout="s:200,sz:'split',dir:'v',splitpos:100">
+            <div style="border:1px solid black;padding:5px;margin:5px;">ciao</div>
+            <div style="border:1px solid black;padding:5px;margin:5px;">mondo</div>
+        </div>
+		<div layout="p:1,sz:'split',dir:'v'">
+			<div layout="sz:'split',dir:'h',splitpos:150">
+			    <div id="accordion" layout="s:100,sz:'accordion'" class="nicepanel">
                     <div>first</div>
-				    <div>second</div>
+			        <div>second</div>
                     <div>third</div>
-				    <div>fourth</div>
-            </div>
-			<div layout="s:200,sz:'split',dir:'v',splitpos:100">
-                <div style="border:1px solid black;padding:5px;margin:5px;">ciao</div>
-                <div style="border:1px solid black;padding:5px;margin:5px;">mondo</div>
-            </div>
-			<div layout="p:1,sz:'split',dir:'v'">
-				<div layout="sz:'split',dir:'h',splitpos:150">
-				    <div id="accordion" layout="s:100,sz:'accordion'" class="nicepanel">
-                        <div>first</div>
-				        <div>second</div>
-                        <div>third</div>
-				        <div>fourth</div>
-                    </div>
-				    <div layout="sz:'sequence',dir:'h'" class="nicepanel">
-                        <div>first</div>
-				        <div>second</div>
-                        <div>third</div>
-				        <div>fourth</div>
-                    </div>
+			        <div>fourth</div>
                 </div>
-                <div layout="sz:'split',dir:'h'">
-				    <div layout="sz:'tabs',dir:'h'" class="nicepanel">
-                        <div>first</div>
-				        <div>second</div>
-                        <div>third</div>
-				        <div>fourth</div>
-                    </div>
-                    <div layout="sz:'split',dir:'v'">
-                        <div  layout="sz:'snap',stepx:40,stepy:40">
-                            <div layout="nx:4" style="background:orange">this is snap</div>
-                            <div layout="nx:1" style="background:orange">1</div>
-                            <div layout="nx:2" style="background:orange">2</div>
-                            <div layout="ny:2" style="background:orange">3</div>
-                            <div layout="nx:1" style="background:orange">4</div>
-                            <div layout="nx:1" style="background:orange">5</div>
-                            <div layout="nx:1" style="background:orange">6</div>
-                            <div layout="nx:1" style="background:orange">7</div>
-                            <div layout="nx:1" style="background:orange">8</div>
-                        </div>
-                        <div  layout="sz:'smart',stepx:40,stepy:40">
-                            <div layout="nx:4" style="background:orange">this is smart</div>
-                            <div layout="nx:1" style="background:orange">1</div>
-                            <div layout="nx:2" style="background:orange">2</div>
-                            <div layout="ny:2" style="background:orange">3</div>
-                            <div layout="nx:1" style="background:orange">4</div>
-                            <div layout="nx:1" style="background:orange">5</div>
-                            <div layout="nx:1" style="background:orange">6</div>
-                            <div layout="nx:1" style="background:orange">7</div>
-                            <div layout="nx:1" style="background:orange">8</div>
-                        </div>
-                    </div>
+			    <div layout="sz:'sequence',dir:'h'" class="nicepanel">
+                    <div>first</div>
+			        <div>second</div>
+                    <div>third</div>
+			        <div>fourth</div>
                 </div>
-			</div>
-		</div>
-        <div layout="sz:'dialog',x:200,y:300,w:400,h:400">
-            <div layout="sz:'accordion'">
-                    
-				    <div  layout="sz:'snap',stepx:40,stepy:40">
+            </div>
+            <div layout="sz:'split',dir:'h'">
+			    <div layout="sz:'tabs',dir:'h'" class="nicepanel">
+                    <div>first</div>
+			        <div>second</div>
+                    <div>third</div>
+			        <div>fourth</div>
+                </div>
+                <div layout="sz:'split',dir:'v'">
+                    <div  layout="sz:'snap',stepx:40,stepy:40">
+                        <div layout="nx:4" style="background:orange">this is snap</div>
                         <div layout="nx:1" style="background:orange">1</div>
                         <div layout="nx:2" style="background:orange">2</div>
                         <div layout="ny:2" style="background:orange">3</div>
-                        <div id="accordion" layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
-                            <div>first</div>
-                            <div>second</div>
-                            <div>third</div>
-                            <div>fourth</div>
-                        </div>
                         <div layout="nx:1" style="background:orange">4</div>
                         <div layout="nx:1" style="background:orange">5</div>
-                        <div layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
-                            <div>first</div>
-				            <div>second</div>
-                            <div>third</div>
-				            <div>fourth</div>
-                        </div>
                         <div layout="nx:1" style="background:orange">6</div>
                         <div layout="nx:1" style="background:orange">7</div>
                         <div layout="nx:1" style="background:orange">8</div>
                     </div>
-                    <div layout="sz:'sequence',dir:'h'">
+                    <div  layout="sz:'smart',stepx:40,stepy:40">
+                        <div layout="nx:4" style="background:orange">this is smart</div>
+                        <div layout="nx:1" style="background:orange">1</div>
+                        <div layout="nx:2" style="background:orange">2</div>
+                        <div layout="ny:2" style="background:orange">3</div>
+                        <div layout="nx:1" style="background:orange">4</div>
+                        <div layout="nx:1" style="background:orange">5</div>
+                        <div layout="nx:1" style="background:orange">6</div>
+                        <div layout="nx:1" style="background:orange">7</div>
+                        <div layout="nx:1" style="background:orange">8</div>
+                    </div>
+                </div>
+            </div>
+		</div>
+        <div id="flap" layout="s:200,sz:'tabs',dir:'right'" style="border:1px solid lightgrey;margin:2px;">
+            <div>first</div>
+		    <div>second</div>
+            <div>third</div>
+		    <div>fourth</div>
+        </div>
+	</div>
+    <div layout="sz:'dialog',x:200,y:300,w:400,h:400">
+        <div layout="sz:'accordion'">
+                
+			    <div  layout="sz:'snap',stepx:40,stepy:40">
+                    <div layout="nx:1" style="background:orange">1</div>
+                    <div layout="nx:2" style="background:orange">2</div>
+                    <div layout="ny:2" style="background:orange">3</div>
+                    <div id="accordion" layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
                         <div>first</div>
                         <div>second</div>
                         <div>third</div>
                         <div>fourth</div>
                     </div>
+                    <div layout="nx:1" style="background:orange">4</div>
+                    <div layout="nx:1" style="background:orange">5</div>
+                    <div layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
+                        <div>first</div>
+			            <div>second</div>
+                        <div>third</div>
+			            <div>fourth</div>
+                    </div>
+                    <div layout="nx:1" style="background:orange">6</div>
+                    <div layout="nx:1" style="background:orange">7</div>
+                    <div layout="nx:1" style="background:orange">8</div>
+                </div>
+                <div layout="sz:'sequence',dir:'h'">
+                    <div>first</div>
+                    <div>second</div>
                     <div>third</div>
-				    <div>fourth</div>
-                    <div  layout="sz:'smart',stepx:40,stepy:40">
-                        <div layout="nx:1" style="background:orange">1</div>
-                        <div layout="nx:2" style="background:orange">2</div>
-                        <div layout="ny:2" style="background:orange">3</div>
-                        <div layout="nx:1" style="background:orange">4</div>
-                        <div layout="nx:1" style="background:orange">5</div>
-                        <div layout="nx:1" style="background:orange">6</div>
-                        <div layout="nx:1" style="background:orange">7</div>
-                        <div layout="nx:1" style="background:orange">8</div>
+                    <div>fourth</div>
+                </div>
+                <div>third</div>
+			    <div>fourth</div>
+                <div  layout="sz:'smart',stepx:40,stepy:40">
+                    <div layout="nx:1" style="background:orange">1</div>
+                    <div layout="nx:2" style="background:orange">2</div>
+                    <div layout="ny:2" style="background:orange">3</div>
+                    <div layout="nx:1" style="background:orange">4</div>
+                    <div layout="nx:1" style="background:orange">5</div>
+                    <div layout="nx:1" style="background:orange">6</div>
+                    <div layout="nx:1" style="background:orange">7</div>
+                    <div layout="nx:1" style="background:orange">8</div>
+                </div>
+                <div  layout="sz:'smart',stepx:40,stepy:40">
+                    <div layout="nx:1" style="background:orange">1</div>
+                    <div layout="nx:2" style="background:orange">2</div>
+                    <div layout="ny:2" style="background:orange">3</div>
+                    <div id="accordion" layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
+                        <div>first</div>
+                        <div>second</div>
+                        <div>third</div>
+                        <div>fourth</div>
                     </div>
-                    <div  layout="sz:'smart',stepx:40,stepy:40">
-                        <div layout="nx:1" style="background:orange">1</div>
-                        <div layout="nx:2" style="background:orange">2</div>
-                        <div layout="ny:2" style="background:orange">3</div>
-                        <div id="accordion" layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
-                            <div>first</div>
-                            <div>second</div>
-                            <div>third</div>
-                            <div>fourth</div>
-                        </div>
-                        <div layout="nx:1" style="background:orange">4</div>
-                        <div layout="nx:1" style="background:orange">5</div>
-                        <div layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
-                            <div>first</div>
-				            <div>second</div>
-                            <div>third</div>
-				            <div>fourth</div>
-                        </div>
-                        <div layout="nx:1" style="background:orange">6</div>
-                        <div layout="nx:1" style="background:orange">7</div>
-                        <div layout="nx:1" style="background:orange">8</div>
+                    <div layout="nx:1" style="background:orange">4</div>
+                    <div layout="nx:1" style="background:orange">5</div>
+                    <div layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
+                        <div>first</div>
+			            <div>second</div>
+                        <div>third</div>
+			            <div>fourth</div>
                     </div>
-            </div>
+                    <div layout="nx:1" style="background:orange">6</div>
+                    <div layout="nx:1" style="background:orange">7</div>
+                    <div layout="nx:1" style="background:orange">8</div>
+                </div>
         </div>
+    </div>
 </body>
 </html>
  
