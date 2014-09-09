@@ -10,7 +10,10 @@ function jl(e)
 		jl.fn[ll.sz](e);
 	//children process
 	for (var i=0;i<e.children.length;i++)
-		jl(e.children[i]);
+    {
+        if (jl.getStyle(e.children[i]).display!="none")
+    		jl(e.children[i]);
+    }
 }
 jl.create=function(tag,attr){var e = document.createElement(tag);for (var k in attr) e.setAttribute(k,attr[k]);return e;};
 jl.map=function(f,s){r=[]; for (var i in s) r.push(f.apply(null,[s[i]])); return r;};
@@ -81,20 +84,20 @@ jl.getSizes=function(e)
 {
     var s=jl.getStyle(e);
     var r={
-        width:parseInt(s.width),
-        height:parseInt(s.height),
-        borderLeft:parseInt(s.borderLeftWidth),
-        borderRight:parseInt(s.borderRightWidth),
-        borderTop:parseInt(s.borderTopWidth),
-        borderBottom:parseInt(s.borderBottomWidth),
-        paddingLeft:parseInt(s.paddingLeft),
-        paddingRight:parseInt(s.paddingRight),
-        paddingTop:parseInt(s.paddingTop),
-        paddingBottom:parseInt(s.paddingBottom),
-        marginLeft:parseInt(s.marginLeft),
-        marginRight:parseInt(s.marginRight),
-        marginTop:parseInt(s.marginTop),
-        marginBottom:parseInt(s.marginBottom)
+        width:parseInt(s.width)||0,
+        height:parseInt(s.height)||0,
+        borderLeft:parseInt(s.borderLeftWidth)||0,
+        borderRight:parseInt(s.borderRightWidth)||0,
+        borderTop:parseInt(s.borderTopWidth)||0,
+        borderBottom:parseInt(s.borderBottomWidth)||0,
+        paddingLeft:parseInt(s.paddingLeft)||0,
+        paddingRight:parseInt(s.paddingRight)||0,
+        paddingTop:parseInt(s.paddingTop)||0,
+        paddingBottom:parseInt(s.paddingBottom)||0,
+        marginLeft:parseInt(s.marginLeft)||0,
+        marginRight:parseInt(s.marginRight)||0,
+        marginTop:parseInt(s.marginTop)||0,
+        marginBottom:parseInt(s.marginBottom)||0
     };
     r.deltaWidth=r.paddingLeft+r.borderLeft+r.marginLeft+r.paddingRight+r.borderRight+r.marginRight;
     r.deltaHeight=r.paddingTop+r.borderTop+r.marginTop+r.paddingBottom+r.borderBottom+r.marginBottom;
@@ -131,6 +134,7 @@ jl.fn.dialog=function(e){
    		e.layout={};
         e.layout.header=document.createElement("div");
         e.appendChild(e.layout.header);
+        jl.toggleClass(e.layout.header,"dialogheader");
         jl.toggleClass(e.layout.header,"jlexclude");
         e.layout.header.textContent="dialog";
         jl.setStyle(e.layout.header,{position:"absolute",top:"0px",left:"0px",right:"0px"});
@@ -301,42 +305,6 @@ jl.fn.split=function(e){
     }
     
 };
-
-//tabs : set children in tabs
-/*jl.fn.tabs=function(e){
-    var ll=jl.getLayout(e);
-    ll.sel=ll.sel||0;
-    if (!e.layout)
-	{
-   		e.layout={};
-        e.layout.header=document.createElement("div");
-        e.appendChild(e.layout.header);
-        jl.toggleClass(e.layout.header,"jlexclude");
-        var cc=jl.children(e);
-        var flaps=[];
-        for (var i=0;i<cc.length;i++)
-        {
-            var c=cc[i];
-            var flap=document.createElement("span");
-            flaps.push(flap);
-            jl.toggleClass(flap,"jlflaps");
-            flap.textContent="tab "+i;
-            e.layout.header.appendChild(flap);
-            flap.addEventListener("click",(function (i){return function(){ll.sel=i;jl.setLayout(e,ll);jl(e);};})(i));
-        }
-        var hm=Math.max.apply(null,jl.map(function(e){return jl.getOuterHeight(e);},flaps));
-        jl.setStyle(e.layout.header,{position:"absolute",top:"0px",left:"0px",right:"0px",height:hm+"px"});
-    }
-    var cc=jl.children(e);
-    for (var i=0;i<cc.length;i++)
-    {
-        var c=cc[i];
-        if (c==e.layout.header)
-            continue;
-        jl.setStyle(c,{"display":(ll.sel==i?"initial":"none")});
-        jl.setStyle(c,{position:"absolute",top:e.layout.header.offsetHeight+"px",bottom:"0px",left:"0px",right:"0px"});
-    }
-}*/
 //tabs: set children in tabs ( you can choose orientation )
 jl.fn.tabs=function(e){
     var ll=jl.getLayout(e);
@@ -448,28 +416,23 @@ jl.fn.accordion=function(e)
     for (var i=0;i<e.layout.flaps.length;i++)
         h-=jl.getSizes(e.layout.flaps[i]).totHeight;
     var offs=0;
-    for (var i=0,j=0;j<e.children.length;j++)
+    for (var i=0;i<e.layout.flaps.length;i++)
     {
-        var c=e.children[j];
+        var c=e.layout.cc[i];
+        var f=e.layout.flaps[i];
         var issel=(i==ll.sel);
-        jl.setStyle(c,{position:"absolute",top:offs+"px",left:"0px",right:"0px",overflow:"hidden"});
-        if (!jl.hasClass(c,"jlexclude"))
-        {
-            jl.setStyle(c,{"height":(issel?(h-jl.getSizes(c).deltaHeight):0)+"px"});
-
-            var flap=e.layout.flaps[i];
-            var flapsel=jl.hasClass(flap,"selected");
-            if ((flapsel && !issel) || (!flapsel && issel))
-                jl.toggleClass(flap,"selected");
-
-
-            i++;
-        }
-        offs+=jl.getSizes(c).totHeight;
-
-
-       
-
+        //posizionamento flap
+        jl.setStyle(f,{position:"absolute",top:offs+"px",left:"0px",right:"0px",overflow:"hidden"});
+        offs+=jl.getSizes(f).totHeight;
+        //posizionamento child
+        var s={position:"absolute",top:offs+"px",left:"0px",right:"0px",overflow:"hidden"};
+        s.height=(issel?(h-jl.getSizes(c).deltaHeight):0)+"px";
+        s.display=(issel?"initial":"none");
+        jl.setStyle(c,s);
+        offs+=(issel?h:0);
+        var flapsel=jl.hasClass(f,"selected");
+        if ((flapsel && !issel) || (!flapsel && issel))
+            jl.toggleClass(f,"selected");
     }
 }
 //snap : grid based fluid layout
