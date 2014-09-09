@@ -322,8 +322,6 @@ jl.fn.tabs=function(e){
         jl.toggleClass(e.layout.header,"tabheader");
         var hstyle={"top":"0px","left":"0px","bottom":"0px","right":"0px","position":"absolute"};
         delete hstyle[{"top":"bottom","left":"right","bottom":"top","right":"left"}[ll.dir]];
-        //hstyle[{"top":"height","left":"width","bottom":"height","right":"width"}[ll.dir]]="20px";
-        //hstyle.background="red";
         jl.setStyle(header,hstyle);
         for (var i=0;i<e.layout.cc.length;i++)
         {
@@ -333,9 +331,7 @@ jl.fn.tabs=function(e){
             header.appendChild(flap);
             if (ll.dir=="top" || ll.dir=="bottom")
                 jl.setStyle(flap,{display:"inline-block"});
-            //jl.setStyle(flap,{border:"1px solid black",padding:"2px",background:"lightgrey"});
             flap.addEventListener("click",(function (i){return function(){ll.sel=i;jl.setLayout(e,ll);jl(e);};})(i));
-            //jl.toggleClass(flap,"jlflaps");
         }
 
     }

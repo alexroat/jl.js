@@ -17,7 +17,12 @@ function jl(e)
 }
 jl.create=function(tag,attr){var e = document.createElement(tag);for (var k in attr) e.setAttribute(k,attr[k]);return e;};
 jl.map=function(f,s){r=[]; for (var i in s) r.push(f.apply(null,[s[i]])); return r;};
-jl.getLayout=function(e){try {return eval("[{"+(e.getAttribute("layout")||"")+"}]")[0];}catch (ex){ return {};}};
+jl.readLayout=function(e){try {return eval("[{"+(e.getAttribute("layout")||"")+"}]")[0];}catch (ex){ return {};}};
+jl.getLayout=function(e){
+    if (e._jl==undefined)
+        e._jl=jl.readLayout(e);
+    return e._jl;
+};
 jl.setLayout=function(e,ll){var r=JSON.stringify(ll);e.setAttribute("layout",r.substr(1,r.length-2));};
 jl.setStyle=function(e,style){for (var s in style) e.style[s]=style[s];};
 jl.getOuterWidth=function(e){
