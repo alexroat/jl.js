@@ -332,9 +332,11 @@ jl.fn.tabs=function(e){
         jl.setStyle(header,hstyle);
         for (var i=0;i<e.layout.cc.length;i++)
         {
+            var c=e.layout.cc[i];
+            var cll=jl.getLayout(c);
             var flap=document.createElement("div");
             e.layout.flaps.push(flap);
-            flap.textContent="tab "+i;
+            flap.textContent=cll.title||"tab "+i;
             header.appendChild(flap);
             if (ll.dir=="top" || ll.dir=="bottom")
                 jl.setStyle(flap,{display:"inline-block"});
@@ -405,9 +407,10 @@ jl.fn.accordion=function(e)
         for (var i=0;i<e.layout.cc.length;i++)
         {
             var c=e.layout.cc[i];
+            var cll=jl.getLayout(c);
             var flap=document.createElement("div");
             e.layout.flaps.push(flap);
-            flap.textContent="tab "+i;
+            flap.textContent=cll.title||"tab "+i;
             e.insertBefore(flap,c);
             jl.toggleClass(flap,"jlaccordionflap");
             jl.toggleClass(flap,"jlexclude");

@@ -170,7 +170,7 @@ window.onload=function()
     <div layout="sz:'dialog',x:200,y:300,w:400,h:400">
         <div layout="sz:'accordion'">
                 
-			    <div  layout="sz:'snap',stepx:40,stepy:40">
+			    <div  layout="sz:'snap',stepx:40,stepy:40,title:'Prova di SNAP'">
                     <div layout="nx:1" style="background:orange">1</div>
                     <div layout="nx:2" style="background:orange">2</div>
                     <div layout="ny:2" style="background:orange">3</div>
@@ -200,7 +200,7 @@ window.onload=function()
                 </div>
                 <div>third</div>
 			    <div>fourth</div>
-                <!--<div  layout="sz:'smart',stepx:40,stepy:40">
+                <div  layout="sz:'smart',stepx:40,stepy:40">
                     <div layout="nx:1" style="background:orange">1</div>
                     <div layout="nx:2" style="background:orange">2</div>
                     <div layout="ny:2" style="background:orange">3</div>
@@ -231,7 +231,7 @@ window.onload=function()
                     <div layout="nx:1" style="background:orange">6</div>
                     <div layout="nx:1" style="background:orange">7</div>
                     <div layout="nx:1" style="background:orange">8</div>
-                </div>-->
+                </div>
         </div>
     </div>
 </body>

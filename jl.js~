@@ -307,7 +307,7 @@ jl.fn.split=function(e){
         var c0h=ll.splitpos-c0s.deltaHeight;
         var c1h=s.height-ll.splitpos-ll.splitsize-c1s.deltaHeight;
         jl.setStyle(c0,{position:"absolute",top:"0px",left:"0px",right:"0px",height:c0h+"px", overflow:"hidden",display:(c0h<0?"none":"initial")});
-        jl.setStyle(c1,{position:"absolute",bottom:"0px",left:"0px",right:"0px",height:c0h+"px", overflow:"hidden",display:(c0h<0?"none":"initial")});
+        jl.setStyle(c1,{position:"absolute",bottom:"0px",left:"0px",right:"0px",height:c1h+"px", overflow:"hidden",display:(c1h<0?"none":"initial")});
         jl.setStyle(e.layout.bar,{position:"absolute",left:"0px",right:"0px",height:ll.splitsize+"px",top:ll.splitpos+"px",cursor:"ns-resize"});
     }
     
@@ -332,9 +332,11 @@ jl.fn.tabs=function(e){
         jl.setStyle(header,hstyle);
         for (var i=0;i<e.layout.cc.length;i++)
         {
+            var c=e.layout.cc[i];
+            var cll=jl.getLayout(c);
             var flap=document.createElement("div");
             e.layout.flaps.push(flap);
-            flap.textContent="tab "+i;
+            flap.textContent=cll.title||"tab "+i;
             header.appendChild(flap);
             if (ll.dir=="top" || ll.dir=="bottom")
                 jl.setStyle(flap,{display:"inline-block"});
@@ -405,9 +407,11 @@ jl.fn.accordion=function(e)
         for (var i=0;i<e.layout.cc.length;i++)
         {
             var c=e.layout.cc[i];
+            var cll=jl.getLayout(c);
+            console.log(cll);
             var flap=document.createElement("div");
             e.layout.flaps.push(flap);
-            flap.textContent="tab "+i;
+            flap.textContent=cll.title||"tab "+i;
             e.insertBefore(flap,c);
             jl.toggleClass(flap,"jlaccordionflap");
             jl.toggleClass(flap,"jlexclude");
