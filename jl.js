@@ -297,15 +297,17 @@ jl.fn.split=function(e){
     if (ll.dir=='h')
     {
         var c0w=ll.splitpos-c0s.deltaWidth;
+        var c1w=s.width-ll.splitpos-ll.splitsize-c1s.deltaWidth;
         jl.setStyle(c0,{position:"absolute",top:"0px",bottom:"0px",left:"0px",width:c0w+"px", overflow:"hidden",display:(c0w<0?"none":"initial")});
-        jl.setStyle(c1,{position:"absolute",top:"0px",bottom:"0px",right:"0px",left:(ll.splitpos+ll.splitsize)+"px", overflow:"hidden"});
+        jl.setStyle(c1,{position:"absolute",top:"0px",bottom:"0px",right:"0px",width:c1w+"px", overflow:"hidden",display:(c1w<0?"none":"initial")});
         jl.setStyle(e.layout.bar,{position:"absolute",top:"0px",bottom:"0px",width:ll.splitsize+"px",left:ll.splitpos+"px",cursor:"ew-resize"});
     }
     else
     {
         var c0h=ll.splitpos-c0s.deltaHeight;
+        var c1h=s.height-ll.splitpos-ll.splitsize-c1s.deltaHeight;
         jl.setStyle(c0,{position:"absolute",top:"0px",left:"0px",right:"0px",height:c0h+"px", overflow:"hidden",display:(c0h<0?"none":"initial")});
-        jl.setStyle(c1,{position:"absolute",bottom:"0px",left:"0px",right:"0px",top:(ll.splitpos+ll.splitsize)+"px", overflow:"hidden"});
+        jl.setStyle(c1,{position:"absolute",bottom:"0px",left:"0px",right:"0px",height:c1h+"px", overflow:"hidden",display:(c1h<0?"none":"initial")});
         jl.setStyle(e.layout.bar,{position:"absolute",left:"0px",right:"0px",height:ll.splitsize+"px",top:ll.splitpos+"px",cursor:"ns-resize"});
     }
     
