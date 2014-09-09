@@ -491,6 +491,7 @@ jl.fn.smart=function(e)
         cll.ny=parseInt(cll.ny)||1;
         cs=jl.getSizes(c);
         var lim=s.width/dw;
+        lim=lim<1?1:lim;
         var go=true;
         for (var iy=0;go;iy++)
             for (var ix=0;go&&ix<lim;ix++)
@@ -499,7 +500,7 @@ jl.fn.smart=function(e)
                 var ok=true;
                 for (var ty=0;ok&&ty<cll.ny;ty++)
                     for (var tx=0;ok&&tx<cll.nx;tx++)
-                        ok=!(((ix+tx)+","+(iy+ty)) in map) && (ix==0 || (1+ix+tx)<lim);
+                        ok=(map[((ix+tx)+","+(iy+ty))]==undefined) && (!ix || (ix+cll.nx)<=lim);
                 //se trova lo spazio piazza l'elemento
                 if (ok)
                 {
@@ -515,6 +516,5 @@ jl.fn.smart=function(e)
             }
     }
 }
-
 
 
