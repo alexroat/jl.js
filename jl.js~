@@ -507,6 +507,25 @@ jl.fn.closable=function(e)
         jl.setStyle(btn,{position:"absolute",top:"0px",right:"0px",padding:"3px",width:"15px",height:"15px","text-align": "center","vertical-align": "middle",cursor: "pointer"});
         e.addEventListener("click",function(){e.parentNode.removeChild(e); jl(e.parentNode);});
     }
+};
+
+//elastic : elastic, resize child using policy
+jl.fn.elastic=function(e)
+{
+    var cc=jl.children(e);
+    for (var i=0;i<cc.length;i++)
+        {
+            var c=cc[i];
+            var cll=jl.getLayout(c);
+
+            cll.x=cll.x||0;
+            cll.y=cll.y||0;
+            cll.w=cll.w||1;
+            cll.h=cll.h||1;
+            cll.hpolicy=cll.hpolicy in [null,'expand','move']?cll.hpolicy:null;
+            cll.vpolicy=cll.vpolicy in [null,'expand','move']?cll.vpolicy:null;
+
+        }
 }
 
 
