@@ -1,9 +1,12 @@
 
-function jl(e)
+function jl(e,layout)
 {
 	//default: usa il body
 	if(!e)
 		e=document.body;
+    //se è impostato il layout lo applica
+    if (layout) 
+        jl.setLayout(e,layout);
 	//read layout
 	var ll=jl.getLayout(e);
 	if (jl.fn[ll.sz])
@@ -24,47 +27,8 @@ jl.getLayout=function(e){
     return e._jl;
 };
 jl.setLayout=function(e,ll){var r=JSON.stringify(ll);e.setAttribute("layout",r.substr(1,r.length-2));};
-jl.setStyle=function(e,style){for (var s in style) e.style[s]=style[s];};
-jl.getOuterWidth=function(e){
-    var s=jl.getStyle(e);
-    var x = e.offsetWidth;
-    x += parseInt(s.marginLeft);
-    x += parseInt(s.marginRight);
-    return x;
-};
-jl.getOuterHeight=function(e){
-    var s=jl.getStyle(e);
-    var x = e.offsetHeight;
-    x += parseInt(s.marginTop);
-    x += parseInt(s.marginBottom);
-    return x;
-};
-jl.getOuterWidth2=function(e,margin){
-    var s=jl.getStyle(e);
-    var x = parseInt(s.width);
-    x += parseInt(s.borderLeft);
-    x += parseInt(s.borderRight);
-    if (margin)
-    {
-        x += parseInt(s.marginLeft);
-        x += parseInt(s.marginRight);
-    }
-    return x;
-};
-jl.getOuterHeight2=function(e,margin){
-    var s=jl.getStyle(e);
-    var x = parseInt(s.height);
-    x += parseInt(s.borderTop);
-    x += parseInt(s.borderBottom);
-    if (margin)
-    {
-        x += parseInt(s.marginTop);
-        x += parseInt(s.marginBottom);
-    }
-    return x;
-};
-
 jl.getStyle=function(e){return e.currentStyle || window.getComputedStyle(e);};
+jl.setStyle=function(e,style){for (var s in style) e.style[s]=style[s];};
 jl.setFillParent=function(e){jl.setStyle(e,{position:"absolute",top:"0px",bottom:"0px",left:"0px",right:"0px"});};
 jl.hasClass=function(e, cls) {var cl=e.className.split(' ');for (var i in cl) if (cl[i]==cls) return true;return false;};
 jl.toggleClass222=function(e, cls) {var cl2=[];var cl=e.className.split(' ');for (var i in cl) if (cl[i]!=cls)cl2.push(cls); if (cl2.length==cl.lenght) cl2.push(cls);e.className=cl2.join(' ');};
@@ -110,7 +74,11 @@ jl.getSizes=function(e)
     r.totHeight=r.height+r.deltaHeight;
     return r;
 };
+jl.setSizes=function(e,r)
+{
+var ss=["width","height","borderLeft","borderRight","borderTop","borderBottom","paddingLeft","paddingRight","paddingTop","paddingBottom","marginLeft","marginRight","marginTop","marginBottom"];
 
+}
 jl.fn={};
 //funzioni di layout
 //------------------
@@ -241,17 +209,19 @@ jl.fn.box=function(e){
 	for (var i=0;i<cc.length;i++)
 	{
 		var cll=jl.getLayout(cc[i]);
-		ts-=cll.s?cll.s:0;
-		tp+=cll.p?cll.p:0;
+		cll.s=parseInt(cll[{'v':'h','h':'w'}[ll.dir]])||0;
+		cll.p=parseInt(cll.p)||0;
+		ts-=cll.s;
+		tp+=cll.p;
 	}
 	var offset=0;
 	for (var i=0;i<cc.length;i++)
 	{
 		var cll=jl.getLayout(cc[i]);
         var cs=jl.getSizes(cc[i]);
-		var s=parseInt(cll.s)||0;
+		var s=cll.s;
 		if (tp)
-			s+=ts*(cll.p?cll.p:0)/tp;
+			s+=ts*cll.p/tp;
         if (ll.dir=="h")
             jl.setStyle(cc[i],{position:"absolute",top:"0px",bottom:"0px",left:offset+"px",width:(s-cs.deltaWidth)+"px"});
         else
@@ -428,7 +398,7 @@ jl.fn.accordion=function(e)
         var f=e.layout.flaps[i];
         var issel=(i==ll.sel);
         //posizionamento flap
-        jl.setStyle(f,{position:"absolute",top:offs+"px",left:"0px",right:"0px",overflow:"hidden"});
+        jl.setStyle(f,{position:"absolute",top:offs+"px",left:"0px",right:"0px",overflow:"hidden",cursor: "pointer"});
         offs+=jl.getSizes(f).totHeight;
         //posizionamento child
         var s={position:"absolute",top:offs+"px",left:"0px",right:"0px",overflow:"hidden"};
@@ -519,6 +489,23 @@ jl.fn.smart=function(e)
 
                 }
             }
+    }
+}
+//closable : closable container
+jl.fn.closable=function(e)
+{
+    var ll=jl.getLayout(e);
+    ll.dir
+    if (!e.layout)
+	{
+   		e.layout={};
+        e.layout.flaps=[];
+        e.layout.cc=jl.children(e);
+        var btn=document.createElement("div");
+        btn.textContent="×";
+        e.appendChild(btn);
+        jl.setStyle(btn,{position:"absolute",top:"0px",right:"0px",padding:"3px",width:"15px",height:"15px","text-align": "center","vertical-align": "middle",cursor: "pointer"});
+        e.addEventListener("click",function(){e.parentNode.removeChild(e); jl(e.parentNode);});
     }
 }
 
