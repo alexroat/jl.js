@@ -290,6 +290,7 @@ jl.fn.tabs=function(e){
     if (!e.layout)
 	{
    		e.layout={};
+        jl.setStyle(e,{"overflow":"hidden"});
         e.layout.flaps=[];
         e.layout.cc=jl.children(e);
         var header=document.createElement("div");
@@ -330,8 +331,63 @@ jl.fn.tabs=function(e){
     }
     
 }
+//flaps: set children in hiddable flaps ( you can choose orientation )
+jl.fn.flaps=function(e){
+    var ll=jl.getLayout(e);
+    ll.dir=['top','left','bottom','right'].indexOf(ll.dir)>=0?ll.dir:'top';
+    if (!e.layout)
+	{
+   		e.layout={};
+        jl.setStyle(e,{"overflow":"hidden"});
+        e.layout.flaps=[];
+        e.layout.cc=jl.children(e);
+        var header=document.createElement("div");
+        e.layout.header=header;
+        e.appendChild(e.layout.header);
+        jl.toggleClass(e.layout.header,"jlexclude");
+        jl.toggleClass(e.layout.header,"tabheader");
+        var hstyle={"top":"0px","left":"0px","bottom":"0px","right":"0px","position":"absolute"};
+        delete hstyle[{"top":"bottom","left":"right","bottom":"top","right":"left"}[ll.dir]];
+        jl.setStyle(header,hstyle);
+        for (var i=0;i<e.layout.cc.length;i++)
+        {
+            var c=e.layout.cc[i];
+            var cll=jl.getLayout(c);
+            var flap=document.createElement("div");
+            e.layout.flaps.push(flap);
+            flap.textContent=cll.title||"flap "+i;
+            header.appendChild(flap);
+            if (ll.dir=="top" || ll.dir=="bottom")
+                jl.setStyle(flap,{display:"inline-block"});
+            flap.addEventListener("click",(function (i){return function(){ll.sel=(ll.sel==i)?null:i;jl.setLayout(e,ll);jl(e);jl(e.parentNode);};})(i));
+        }
 
+    }
+    
+    var hs=jl.getSizes(e.layout.header);
+    var cstyle={"top":"0px","left":"0px","bottom":"0px","right":"0px","position":"absolute"};
+    cstyle[ll.dir]={"top":hs.totHeight,"left":hs.totWidth,"bottom":hs.totHeight,"right":hs.totWidth}[ll.dir]+"px";
+    //delete cstyle[{"top":"bottom","left":"right","bottom":"top","right":"left"}[ll.dir]];
 
+    var esize=parseInt(cstyle[ll.dir]);
+    esize+=jl.getSizes(e)[{"top":"deltaHeight","left":"deltaWidth","bottom":"deltaHeight","right":"deltaWidth"}[ll.dir]];
+    for (var i=0;i<e.layout.cc.length;i++)
+    {
+        var c=e.layout.cc[i];
+        var issel=(i==ll.sel);
+        cstyle.display=issel?"initial":"none";
+        jl.setStyle(c,cstyle);
+        var cl=jl.getLayout(c);
+        var csize=jl.getSizes(c);
+        if (issel)
+            esize+=cl[{"top":'h',"left":'w',"bottom":'h',"right":'w'}[ll.dir]]||0;
+        ll[{"top":'h',"left":'w',"bottom":'h',"right":'w'}[ll.dir]]=esize;
+        var flap=e.layout.flaps[i];
+        var flapsel=jl.hasClass(flap,"selected");
+        if ((flapsel && !issel) || (!flapsel && issel))
+            jl.toggleClass(flap,"selected");
+    }
+}
 //sequence : set sequence of tabs
 jl.fn.sequence=function(e){
     var ll=jl.getLayout(e);
@@ -380,7 +436,7 @@ jl.fn.accordion=function(e)
             var cll=jl.getLayout(c);
             var flap=document.createElement("div");
             e.layout.flaps.push(flap);
-            flap.textContent=cll.title||"tab "+i;
+            flap.textContent=cll.title||"section "+i;
             e.insertBefore(flap,c);
             jl.toggleClass(flap,"jlaccordionflap");
             jl.toggleClass(flap,"jlexclude");

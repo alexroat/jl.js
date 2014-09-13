@@ -109,7 +109,7 @@ jl.fn.dialog=function(e){
         e.appendChild(e.layout.header);
         jl.toggleClass(e.layout.header,"dialogheader");
         jl.toggleClass(e.layout.header,"jlexclude");
-        e.layout.header.textContent="dialog";
+        e.layout.header.textContent=ll.title||"dialog";
         jl.setStyle(e.layout.header,{position:"absolute",top:"0px",left:"0px",right:"0px"});
         var cc=jl.children(e);
         var testb=function(evt){
@@ -330,8 +330,63 @@ jl.fn.tabs=function(e){
     }
     
 }
+//flaps: set children in hiddable flaps ( you can choose orientation )
+jl.fn.flaps=function(e){
+    var ll=jl.getLayout(e);
+    ll.dir=['top','left','bottom','right'].indexOf(ll.dir)>=0?ll.dir:'top';
+    if (!e.layout)
+	{
+   		e.layout={};
+        jl.setStyle(e,{"overflow":"hidden"});
+        e.layout.flaps=[];
+        e.layout.cc=jl.children(e);
+        var header=document.createElement("div");
+        e.layout.header=header;
+        e.appendChild(e.layout.header);
+        jl.toggleClass(e.layout.header,"jlexclude");
+        jl.toggleClass(e.layout.header,"tabheader");
+        var hstyle={"top":"0px","left":"0px","bottom":"0px","right":"0px","position":"absolute"};
+        delete hstyle[{"top":"bottom","left":"right","bottom":"top","right":"left"}[ll.dir]];
+        jl.setStyle(header,hstyle);
+        for (var i=0;i<e.layout.cc.length;i++)
+        {
+            var c=e.layout.cc[i];
+            var cll=jl.getLayout(c);
+            var flap=document.createElement("div");
+            e.layout.flaps.push(flap);
+            flap.textContent=cll.title||"flap "+i;
+            header.appendChild(flap);
+            if (ll.dir=="top" || ll.dir=="bottom")
+                jl.setStyle(flap,{display:"inline-block"});
+            flap.addEventListener("click",(function (i){return function(){ll.sel=(ll.sel==i)?null:i;jl.setLayout(e,ll);jl(e);jl(e.parentNode);};})(i));
+        }
 
+    }
+    
+    var hs=jl.getSizes(e.layout.header);
+    var cstyle={"top":"0px","left":"0px","bottom":"0px","right":"0px","position":"absolute"};
+    cstyle[ll.dir]={"top":hs.totHeight,"left":hs.totWidth,"bottom":hs.totHeight,"right":hs.totWidth}[ll.dir]+"px";
+    //delete cstyle[{"top":"bottom","left":"right","bottom":"top","right":"left"}[ll.dir]];
 
+    var esize=parseInt(cstyle[ll.dir]);
+    esize+=jl.getSizes(e)[{"top":"deltaHeight","left":"deltaWidth","bottom":"deltaHeight","right":"deltaWidth"}[ll.dir]];
+    for (var i=0;i<e.layout.cc.length;i++)
+    {
+        var c=e.layout.cc[i];
+        var issel=(i==ll.sel);
+        cstyle.display=issel?"initial":"none";
+        jl.setStyle(c,cstyle);
+        var cl=jl.getLayout(c);
+        var csize=jl.getSizes(c);
+        if (issel)
+            esize+=cl[{"top":'h',"left":'w',"bottom":'h',"right":'w'}[ll.dir]]||0;
+        ll[{"top":'h',"left":'w',"bottom":'h',"right":'w'}[ll.dir]]=esize;
+        var flap=e.layout.flaps[i];
+        var flapsel=jl.hasClass(flap,"selected");
+        if ((flapsel && !issel) || (!flapsel && issel))
+            jl.toggleClass(flap,"selected");
+    }
+}
 //sequence : set sequence of tabs
 jl.fn.sequence=function(e){
     var ll=jl.getLayout(e);
@@ -360,8 +415,8 @@ jl.fn.sequence=function(e){
         jl.setStyle(c,{"display":(ll.sel==i?"initial":"none")});
         jl.setStyle(c,{position:"absolute",top:"0px",bottom:"0px",left:"0px",right:"0px"});
         var cmdtop=(e.offsetHeight-e.layout.prev.offsetHeight)/2;
-        jl.setStyle(e.layout.prev,{position:"absolute",top:cmdtop+"px",left:"0px"});
-        jl.setStyle(e.layout.next,{position:"absolute",top:cmdtop+"px",right:"0px"});
+        jl.setStyle(e.layout.prev,{position:"absolute",top:cmdtop+"px",left:"3px"});
+        jl.setStyle(e.layout.next,{position:"absolute",top:cmdtop+"px",right:"3px"});
     }
 }
 //accordion : set children in an accordion
@@ -380,7 +435,7 @@ jl.fn.accordion=function(e)
             var cll=jl.getLayout(c);
             var flap=document.createElement("div");
             e.layout.flaps.push(flap);
-            flap.textContent=cll.title||"tab "+i;
+            flap.textContent=cll.title||"section "+i;
             e.insertBefore(flap,c);
             jl.toggleClass(flap,"jlaccordionflap");
             jl.toggleClass(flap,"jlexclude");
@@ -505,27 +560,24 @@ jl.fn.closable=function(e)
         btn.textContent="×";
         e.appendChild(btn);
         jl.setStyle(btn,{position:"absolute",top:"0px",right:"0px",padding:"3px",width:"15px",height:"15px","text-align": "center","vertical-align": "middle",cursor: "pointer"});
+        btn.addEventListener("click",function(){e.parentNode.removeChild(e); jl(e.parentNode);});
+    }
+}
+//backdrop: closable backdrop
+jl.fn.backdrop=function(e)
+{
+	var ll=jl.getLayout(e);
+    ll.dir
+    if (!e.layout)
+	{
+   		e.layout={};
+        e.layout.flaps=[];
+        e.layout.cc=jl.children(e);
+		var es={position: "fixed",top: "0px",bottom: "0px",left: "0px",right: "0px","background-color": "rgba(10, 10, 10, 0.8)","z-index": 90};
+        jl.setStyle(e,es);
         e.addEventListener("click",function(){e.parentNode.removeChild(e); jl(e.parentNode);});
     }
-};
 
-//elastic : elastic, resize child using policy
-jl.fn.elastic=function(e)
-{
-    var cc=jl.children(e);
-    for (var i=0;i<cc.length;i++)
-        {
-            var c=cc[i];
-            var cll=jl.getLayout(c);
-
-            cll.x=cll.x||0;
-            cll.y=cll.y||0;
-            cll.w=cll.w||1;
-            cll.h=cll.h||1;
-            cll.hpolicy=cll.hpolicy in [null,'expand','move']?cll.hpolicy:null;
-            cll.vpolicy=cll.vpolicy in [null,'expand','move']?cll.vpolicy:null;
-
-        }
 }
 
 

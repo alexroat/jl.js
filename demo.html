@@ -107,16 +107,22 @@ window.onload=function()
 	<div layout="sz:'box',dir:'v'">
 		<div layout="h:20" style="border:2px solid grey;oveflow:hidden;background:beige">Header</div>
 		<div layout="sz:'box',p:1" style="margin:2px;">
-			<div id="accordion" layout="w:100,sz:'accordion'">
-					<div>first</div>
-					<div>second</div>
-					<div>third</div>
-					<div>fourth</div>
-			</div>
-			<div layout="w:200,sz:'split',dir:'v',splitpos:100">
-				<div style="border:1px solid black;padding:5px;margin:5px;">ciao</div>
-				<div style="border:1px solid black;padding:5px;margin:5px;">mondo</div>
-			</div>
+            <div layout="sz:'flaps',dir:'left',w:100" style="border:1px solid lightgrey;margin:2px;">
+					<div layout="w:50">first</div>
+					<div layout="w:60">second</div>
+					<div layout="w:70">third</div>
+					<div layout="w:80">fourth</div>
+			        <div id="accordion" layout="w:100,sz:'accordion'">
+					        <div>first</div>
+					        <div>second</div>
+					        <div>third</div>
+					        <div>fourth</div>
+			        </div>
+			        <div layout="w:200,sz:'split',dir:'v',splitpos:100">
+				        <div style="border:1px solid black;padding:5px;margin:5px;">ciao</div>
+				        <div style="border:1px solid black;padding:5px;margin:5px;">mondo</div>
+			        </div>
+    	    </div>
 			<div layout="p:1,sz:'split',dir:'v'">
 				<div layout="sz:'split',dir:'h',splitpos:150">
 					<div id="accordion" layout="s:100,sz:'accordion'" class="nicepanel">
@@ -178,7 +184,12 @@ window.onload=function()
 				</div>
 			</div>
 		</div>
-		<div layout="h:20" style="border:2px solid grey;oveflow:hidden;background:beige">Footer</div>
+		<div id="footer" layout="sz:'flaps',dir:'top',h:100" style="border:1px solid lightgrey;margin:2px;">
+					<div>first</div>
+					<div layout="h:50">second</div>
+					<div layout="h:50">third</div>
+					<div layout="h:50">fourth</div>
+	    </div>
 	</div>
     <div layout="sz:'dialog',x:200,y:300,w:400,h:400,title:'Accordion con vari container fluid'">
         <div layout="sz:'accordion'">

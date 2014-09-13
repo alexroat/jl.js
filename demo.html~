@@ -17,6 +17,9 @@
     cursor:default;
 }
 
+button[layout] {
+box-sizing: content-box;
+}
 
 .jlbutton
 {
@@ -101,78 +104,94 @@ window.onload=function()
 </script>
 </head>
 <body layout="sz:'fullpage'">
-	<div layout="sz:'box'">
-		<div id="accordion" layout="w:100,sz:'accordion'">
-                <div>first</div>
-			    <div>second</div>
-                <div>third</div>
-			    <div>fourth</div>
-        </div>
-		<div layout="w:200,sz:'split',dir:'v',splitpos:100">
-            <div style="border:1px solid black;padding:5px;margin:5px;">ciao</div>
-            <div style="border:1px solid black;padding:5px;margin:5px;">mondo</div>
-        </div>
-		<div layout="p:1,sz:'split',dir:'v'">
-			<div layout="sz:'split',dir:'h',splitpos:150">
-			    <div id="accordion" layout="s:100,sz:'accordion'" class="nicepanel">
-                    <div>first</div>
-			        <div>second</div>
-                    <div>third</div>
-			        <div>fourth</div>
-                </div>
-			    <div layout="sz:'sequence',dir:'h'" class="nicepanel">
-                    <div>first</div>
-			        <div>second</div>
-                    <div>third</div>
-			        <div>fourth</div>
-                </div>
-            </div>
-            <div layout="sz:'split',dir:'h'">
-			    <div layout="sz:'tabs',dir:'h'" class="nicepanel">
-                    <div>first</div>
-			        <div>second</div>
-                    <div>third</div>
-			        <div>fourth</div>
-                </div>
-                <div layout="sz:'split',dir:'v'">
-                    <div  layout="sz:'snap',stepx:40,stepy:40">
-                        <div layout="nx:4" style="background:orange">this is snap</div>
-                        <div layout="nx:1" style="background:orange">1</div>
-                        <div layout="nx:2" style="background:orange">2</div>
-                        <div layout="ny:2" style="background:orange">3</div>
-                        <div layout="nx:1" style="background:orange">4</div>
-                        <div layout="nx:1" style="background:orange">5</div>
-                        <div layout="nx:1" style="background:orange">6</div>
-                        <div layout="nx:1" style="background:orange">7</div>
-                        <div layout="nx:1" style="background:orange">8</div>
-                    </div>
-                    <div  layout="sz:'smart',stepx:40,stepy:40">
-                        <div layout="nx:4" style="background:orange">this is smart</div>
-                        <div layout="nx:1" style="background:orange">1</div>
-                        <div layout="nx:2" style="background:orange">2</div>
-                        <div layout="ny:2" style="background:orange">3</div>
-                        <div layout="nx:1" style="background:orange">4</div>
-                        <div layout="nx:1" style="background:orange">5</div>
-                        <div layout="nx:1" style="background:orange">6</div>
-                        <div layout="nx:1" style="background:orange">7</div>
-                        <div layout="nx:1" style="background:orange">8</div>
-                    </div>
-                </div>
-            </div>
+	<div layout="sz:'box',dir:'v'">
+		<div layout="h:20" style="border:2px solid grey;oveflow:hidden;background:beige">Header</div>
+		<div layout="sz:'box',p:1" style="margin:2px;">
+            <div layout="sz:'flaps',dir:'right',w:100" style="border:1px solid lightgrey;margin:2px;">
+					<div layout="w:50">first</div>
+					<div layout="w:60">second</div>
+					<div layout="w:70">third</div>
+					<div layout="w:80">fourth</div>
+			        <div id="accordion" layout="w:100,sz:'accordion'">
+					        <div>first</div>
+					        <div>second</div>
+					        <div>third</div>
+					        <div>fourth</div>
+			        </div>
+			        <div layout="w:200,sz:'split',dir:'v',splitpos:100">
+				        <div style="border:1px solid black;padding:5px;margin:5px;">ciao</div>
+				        <div style="border:1px solid black;padding:5px;margin:5px;">mondo</div>
+			        </div>
+    	    </div>
+			<div layout="p:1,sz:'split',dir:'v'">
+				<div layout="sz:'split',dir:'h',splitpos:150">
+					<div id="accordion" layout="s:100,sz:'accordion'" class="nicepanel">
+						<div>first</div>
+						<div>second</div>
+						<div>third</div>
+						<div>fourth</div>
+					</div>
+					<div layout="sz:'sequence',dir:'h'" class="nicepanel">
+						<div>first</div>
+						<div>second</div>
+						<div>third</div>
+						<div>fourth</div>
+					</div>
+				</div>
+				<div layout="sz:'split',dir:'h'">
+					<div layout="sz:'tabs',dir:'h'" class="nicepanel">
+						<div>first</div>
+						<div>second</div>
+						<div>third</div>
+						<div>fourth</div>
+					</div>
+					<div layout="sz:'split',dir:'v'">
+						<div  layout="sz:'snap',stepx:40,stepy:40">
+							<div layout="nx:4" style="background:orange">this is snap</div>
+							<div layout="nx:1" style="background:orange">1</div>
+							<div layout="nx:2" style="background:orange">2</div>
+							<div layout="ny:2" style="background:orange">3</div>
+							<div layout="nx:1" style="background:orange">4</div>
+							<div layout="nx:1" style="background:orange">5</div>
+							<div layout="nx:1" style="background:orange">6</div>
+							<div layout="nx:1" style="background:orange">7</div>
+							<div layout="nx:1" style="background:orange">8</div>
+						</div>
+						<div  layout="sz:'smart',stepx:40,stepy:40">
+							<div layout="nx:4" style="background:orange">this is smart</div>
+							<div layout="nx:1" style="background:orange">1</div>
+							<div layout="nx:2" style="background:orange">2</div>
+							<div layout="ny:2" style="background:orange">3</div>
+							<div layout="nx:1" style="background:orange">4</div>
+							<div layout="nx:1" style="background:orange">5</div>
+							<div layout="nx:1" style="background:orange">6</div>
+							<div layout="nx:1" style="background:orange">7</div>
+							<div layout="nx:1" style="background:orange">8</div>
+							<button layout="nx:1">clickme</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div layout="w:200,sz:'box',dir:'v'">
+				<div layout="h:100,sz:'closable'" style="border:1px solid lightgrey;margin:2px;">
+					<div>close me</div>
+				</div>
+				<div id="flap" layout="sz:'tabs',dir:'right',p:1" style="border:1px solid lightgrey;margin:2px;">
+					<div>first</div>
+					<div>second</div>
+					<div>third</div>
+					<div>fourth</div>
+				</div>
+			</div>
 		</div>
-        <div layout="w:200,sz:'box',dir:'v'">
-            <div layout="h:100,sz:'closable'" style="border:1px solid lightgrey;margin:2px;">
-                <div>close me</div>
-            </div>
-            <div id="flap" layout="sz:'tabs',dir:'right',p=1" style="border:1px solid lightgrey;margin:2px;">
-                <div>first</div>
-		        <div>second</div>
-                <div>third</div>
-		        <div>fourth</div>
-            </div>
-        </div>
+		<div id="footer" layout="sz:'flaps',dir:'top',h:100" style="border:1px solid lightgrey;margin:2px;">
+					<div>first</div>
+					<div layout="h:50">second</div>
+					<div layout="h:50">third</div>
+					<div layout="h:50">fourth</div>
+	    </div>
 	</div>
-    <div layout="sz:'dialog',x:200,y:300,w:400,h:400">
+    <div layout="sz:'dialog',x:200,y:300,w:400,h:400,title:'Accordion con vari container fluid'">
         <div layout="sz:'accordion'">
                 
 			    <div  layout="sz:'snap',stepx:40,stepy:40,title:'Prova di SNAP'">
@@ -237,6 +256,26 @@ window.onload=function()
                 </div>
         </div>
     </div>
+	<div layout="sz:'dialog',x:650,y:100,w:300,h:300,title:'Aggiunta dinamica di closable su SMART'">
+		<div  layout="sz:'smart',stepx:40,stepy:40">
+			<button layout="nx:2" onclick="gen.call(this)">clickme</button>
+		</div>
+		<script>
+				var gen=function()
+				{
+					var n=document.createElement("div");
+					var nx=1+Math.floor(Math.random()*3);
+					var ny=1+Math.floor(Math.random()*3);
+					n.setAttribute("layout","nx:"+nx+",ny:"+ny+",sz:'closable'");
+					var color="rgba("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+",0.5)";
+					jl.setStyle(n,{border: "1px solid grey",margin:"3px",background:color});
+					this.parentNode.appendChild(n);
+					jl(this.parentNode);
+					
+				};
+		</script>
+	</div>
+	<div layout="sz:'backdrop'"></div>
 </body>
 </html>
  
