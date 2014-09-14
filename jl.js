@@ -10,7 +10,11 @@ function jl(e,layout)
 	//read layout
 	var ll=jl.getLayout(e);
 	if (jl.fn[ll.sz])
+    {
+        var st={"overflow":"hidden"};
+        jl.setStyle(e,st);
 		jl.fn[ll.sz](e);
+    }
 	//children process
 	for (var i=0;i<e.children.length;i++)
     {
@@ -203,7 +207,7 @@ jl.fn.fitme=function(e){
 jl.fn.box=function(e){
     var ll=jl.getLayout(e);
     ll.dir=ll.dir=='v'?'v':'h';
-	var ts={'h':e.offsetWidth,'v':e.offsetHeight}[ll.dir];
+	var ts=jl.getSizes(e)[{'h':"width",'v':"height"}[ll.dir]];
 	var tp=0;
     var cc=jl.children(e);
 	for (var i=0;i<cc.length;i++)
@@ -290,7 +294,6 @@ jl.fn.tabs=function(e){
     if (!e.layout)
 	{
    		e.layout={};
-        jl.setStyle(e,{"overflow":"hidden"});
         e.layout.flaps=[];
         e.layout.cc=jl.children(e);
         var header=document.createElement("div");
@@ -338,7 +341,6 @@ jl.fn.flaps=function(e){
     if (!e.layout)
 	{
    		e.layout={};
-        jl.setStyle(e,{"overflow":"hidden"});
         e.layout.flaps=[];
         e.layout.cc=jl.children(e);
         var header=document.createElement("div");
@@ -395,7 +397,6 @@ jl.fn.sequence=function(e){
     if (!e.layout)
 	{
    		e.layout={};
-        jl.setStyle(e,{"overflow":"hidden"});
         e.layout.prev=document.createElement("span");
         e.layout.prev.textContent="<";
         jl.toggleClass(e.layout.prev,"jlexclude");
@@ -580,5 +581,4 @@ jl.fn.backdrop=function(e)
     }
 
 }
-
 
