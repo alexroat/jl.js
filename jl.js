@@ -363,7 +363,8 @@ jl.fn.flaps=function(e){
                 jl.setStyle(flap,{display:"inline-block"});
             flap.addEventListener("click",(function (i){return function(){ll.sel=(ll.sel==i)?null:i;jl.setLayout(e,ll);jl(e);jl(e.parentNode);};})(i));
         }
-
+        //schedula la rivalidazione del padre
+        setTimeout(function(){jl(e.parentNode);},0);
     }
     
     var hs=jl.getSizes(e.layout.header);
