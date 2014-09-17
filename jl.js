@@ -46,7 +46,7 @@ jl.map = function(f, s) {
 //read and parse layout attribute as an object
 jl.readLayout = function(e) {
     try {
-        return eval("[{" + (e.getAttribute("layout") || "") + "}]")[0];
+        return eval("[{" + (e.getAttribute("data-layout") || e.getAttribute("layout")||"") + "}]")[0];
     } catch (ex) {
         return {};
     }

@@ -23,80 +23,80 @@
             };
         </script>
     </head>
-    <body layout="sz:'fullpage'">
-        <div layout="sz:'box',dir:'v'">
-            <div layout="h:20" style="border:2px solid grey;oveflow:hidden;background:beige">Please visit the <a href="https://github.com/alexroat/jl.js/">JL.js project page</a></div>
-            <div layout="sz:'box',p:1" style="margin:2px;">
-                <div layout="sz:'flaps',dir:'left'" style="border:1px solid lightgrey;margin:2px;">
-                    <div layout="w:50">first</div>
-                    <div layout="w:60">second</div>
-                    <div layout="w:70">third</div>
-                    <div layout="w:80">fourth</div>
-                    <div id="accordion" layout="w:100,sz:'accordion',title:'accordion'">
+    <body data-layout="sz:'fullpage'">
+        <div data-layout="sz:'box',dir:'v'">
+            <div data-layout="h:20" style="border:2px solid grey;overflow:hidden;background:beige">Please visit the <a href="https://github.com/alexroat/jl.js/">JL.js project page</a></div>
+            <div data-layout="sz:'box',p:1" style="margin:2px;">
+                <div data-layout="sz:'flaps',dir:'left'" style="border:1px solid lightgrey;margin:2px;">
+                    <div data-layout="w:50">first</div>
+                    <div data-layout="w:60">second</div>
+                    <div data-layout="w:70">third</div>
+                    <div data-layout="w:80">fourth</div>
+                    <div id="accordion" data-layout="w:100,sz:'accordion',title:'accordion'">
                         <div>first</div>
                         <div>second</div>
                         <div>third</div>
                         <div>fourth</div>
                     </div>
-                    <div layout="w:200,sz:'split',dir:'v',splitpos:100,title:'split'">
+                    <div data-layout="w:200,sz:'split',dir:'v',splitpos:100,title:'split'">
                         <div style="border:1px solid black;padding:5px;margin:5px;">ciao</div>
                         <div style="border:1px solid black;padding:5px;margin:5px;">mondo</div>
                     </div>
                 </div>
-                <div layout="p:1,sz:'split',dir:'v'">
-                    <div layout="sz:'split',dir:'h',splitpos:150">
-                        <div id="accordion" layout="s:100,sz:'accordion'" class="nicepanel">
+                <div data-layout="p:1,sz:'split',dir:'v'">
+                    <div data-layout="sz:'split',dir:'h',splitpos:150">
+                        <div  data-layout="s:100,sz:'accordion'" class="nicepanel">
                             <div>first</div>
                             <div>second</div>
                             <div>third</div>
                             <div>fourth</div>
                         </div>
-                        <div layout="sz:'sequence',dir:'h'" class="nicepanel">
+                        <div data-layout="sz:'sequence',dir:'h'" class="nicepanel">
                             <div>first</div>
                             <div>second</div>
                             <div>third</div>
                             <div>fourth</div>
                         </div>
                     </div>
-                    <div layout="sz:'split',dir:'h'">
-                        <div layout="sz:'tabs',dir:'h'" class="nicepanel">
+                    <div data-layout="sz:'split',dir:'h'">
+                        <div data-layout="sz:'tabs',dir:'h'" class="nicepanel">
                             <div>first</div>
                             <div>second</div>
                             <div>third</div>
                             <div>fourth</div>
                         </div>
-                        <div layout="sz:'split',dir:'v'">
-                            <div  layout="sz:'snap',stepx:40,stepy:40">
-                                <div layout="nx:4" style="background:orange">this is snap</div>
-                                <div layout="nx:1" style="background:orange">1</div>
-                                <div layout="nx:2" style="background:orange">2</div>
-                                <div layout="ny:2" style="background:orange">3</div>
-                                <div layout="nx:1" style="background:orange">4</div>
-                                <div layout="nx:1" style="background:orange">5</div>
-                                <div layout="nx:1" style="background:orange">6</div>
-                                <div layout="nx:1" style="background:orange">7</div>
-                                <div layout="nx:1" style="background:orange">8</div>
+                        <div data-layout="sz:'split',dir:'v'">
+                            <div  data-layout="sz:'snap',stepx:40,stepy:40">
+                                <div data-layout="nx:4" style="background:orange">this is snap</div>
+                                <div data-layout="nx:1" style="background:orange">1</div>
+                                <div data-layout="nx:2" style="background:orange">2</div>
+                                <div data-layout="ny:2" style="background:orange">3</div>
+                                <div data-layout="nx:1" style="background:orange">4</div>
+                                <div data-layout="nx:1" style="background:orange">5</div>
+                                <div data-layout="nx:1" style="background:orange">6</div>
+                                <div data-layout="nx:1" style="background:orange">7</div>
+                                <div data-layout="nx:1" style="background:orange">8</div>
                             </div>
-                            <div  layout="sz:'smart',stepx:40,stepy:40">
-                                <div layout="nx:4" style="background:orange">this is smart</div>
-                                <div layout="nx:1" style="background:orange">1</div>
-                                <div layout="nx:2" style="background:orange">2</div>
-                                <div layout="ny:2" style="background:orange">3</div>
-                                <div layout="nx:1" style="background:orange">4</div>
-                                <div layout="nx:1" style="background:orange">5</div>
-                                <div layout="nx:1" style="background:orange">6</div>
-                                <div layout="nx:1" style="background:orange">7</div>
-                                <div layout="nx:1" style="background:orange">8</div>
-                                <button layout="nx:1">clickme</button>
+                            <div  data-layout="sz:'smart',stepx:40,stepy:40">
+                                <div data-layout="nx:4" style="background:orange">this is smart</div>
+                                <div data-layout="nx:1" style="background:orange">1</div>
+                                <div data-layout="nx:2" style="background:orange">2</div>
+                                <div data-layout="ny:2" style="background:orange">3</div>
+                                <div data-layout="nx:1" style="background:orange">4</div>
+                                <div data-layout="nx:1" style="background:orange">5</div>
+                                <div data-layout="nx:1" style="background:orange">6</div>
+                                <div data-layout="nx:1" style="background:orange">7</div>
+                                <div data-layout="nx:1" style="background:orange">8</div>
+                                <button data-layout="nx:1">clickme</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div layout="w:200,sz:'box',dir:'v'">
-                    <div layout="h:100,sz:'closable'" style="border:1px solid lightgrey;margin:2px;">
+                <div data-layout="w:200,sz:'box',dir:'v'">
+                    <div data-layout="h:100,sz:'closable'" style="border:1px solid lightgrey;margin:2px;">
                         <div>close me</div>
                     </div>
-                    <div id="flap" layout="sz:'tabs',dir:'right',p:1" style="border:1px solid lightgrey;margin:2px;">
+                    <div id="flap" data-layout="sz:'tabs',dir:'right',p:1" style="border:1px solid lightgrey;margin:2px;">
                         <div>first</div>
                         <div>second</div>
                         <div>third</div>
@@ -104,85 +104,85 @@
                     </div>
                 </div>
             </div>
-            <div id="footer" layout="sz:'flaps',dir:'top',h:100" style="border:1px solid lightgrey;margin:2px;">
+            <div id="footer" data-layout="sz:'flaps',dir:'top',h:100" style="border:1px solid lightgrey;margin:2px;">
                 <div>first</div>
-                <div layout="h:50">second</div>
-                <div layout="h:50">third</div>
-                <div layout="h:50">fourth</div>
+                <div data-layout="h:50">second</div>
+                <div data-layout="h:50">third</div>
+                <div data-layout="h:50">fourth</div>
             </div>
         </div>
-        <div layout="sz:'dialog',x:200,y:300,w:400,h:400,title:'Accordion con vari container fluid'">
-            <div layout="sz:'accordion'">
+        <div data-layout="sz:'dialog',x:200,y:300,w:400,h:400,title:'Accordion con vari container fluid'">
+            <div data-layout="sz:'accordion'">
 
-                <div  layout="sz:'snap',stepx:40,stepy:40,title:'Prova di SNAP'">
-                    <div layout="nx:1" style="background:orange">1</div>
-                    <div layout="nx:2" style="background:orange">2</div>
-                    <div layout="ny:2" style="background:orange">3</div>
-                    <div id="accordion" layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
+                <div  data-layout="sz:'snap',stepx:40,stepy:40,title:'Prova di SNAP'">
+                    <div data-layout="nx:1" style="background:orange">1</div>
+                    <div data-layout="nx:2" style="background:orange">2</div>
+                    <div data-layout="ny:2" style="background:orange">3</div>
+                    <div  data-layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
                         <div>first</div>
                         <div>second</div>
                         <div>third</div>
                         <div>fourth</div>
                     </div>
-                    <div layout="nx:1" style="background:orange">4</div>
-                    <div layout="nx:1" style="background:orange">5</div>
-                    <div layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
+                    <div data-layout="nx:1" style="background:orange">4</div>
+                    <div data-layout="nx:1" style="background:orange">5</div>
+                    <div data-layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
                         <div>first</div>
                         <div>second</div>
                         <div>third</div>
                         <div>fourth</div>
                     </div>
-                    <div layout="nx:1" style="background:orange">6</div>
-                    <div layout="nx:1" style="background:orange">7</div>
-                    <div layout="nx:1" style="background:orange">8</div>
+                    <div data-layout="nx:1" style="background:orange">6</div>
+                    <div data-layout="nx:1" style="background:orange">7</div>
+                    <div data-layout="nx:1" style="background:orange">8</div>
                 </div>
-                <div layout="sz:'sequence',dir:'h',title:'Prova di SEQUENCE'">
+                <div data-layout="sz:'sequence',dir:'h',title:'Prova di SEQUENCE'">
                     <div>first</div>
                     <div>second</div>
                     <div>third</div>
                     <div>fourth</div>
                 </div>
-                <div  layout="sz:'smart',stepx:40,stepy:40,title:'Prova di SMART (semplice)'">
-                    <div layout="nx:1" style="background:orange">1</div>
-                    <div layout="nx:2" style="background:orange">2</div>
-                    <div layout="ny:2" style="background:orange">3</div>
-                    <div layout="nx:1" style="background:orange">4</div>
-                    <div layout="nx:1" style="background:orange">5</div>
-                    <div layout="nx:1" style="background:orange">6</div>
-                    <div layout="nx:1" style="background:orange">7</div>
-                    <div layout="nx:1" style="background:orange">8</div>
+                <div  data-layout="sz:'smart',stepx:40,stepy:40,title:'Prova di SMART (semplice)'">
+                    <div data-layout="nx:1" style="background:orange">1</div>
+                    <div data-layout="nx:2" style="background:orange">2</div>
+                    <div data-layout="ny:2" style="background:orange">3</div>
+                    <div data-layout="nx:1" style="background:orange">4</div>
+                    <div data-layout="nx:1" style="background:orange">5</div>
+                    <div data-layout="nx:1" style="background:orange">6</div>
+                    <div data-layout="nx:1" style="background:orange">7</div>
+                    <div data-layout="nx:1" style="background:orange">8</div>
                 </div>
-                <div  layout="sz:'smart',stepx:40,stepy:40,title:'Prova di SMART'">
-                    <div layout="nx:1" style="background:orange">1</div>
-                    <div layout="nx:2" style="background:orange">2</div>
-                    <div layout="ny:2" style="background:orange">3</div>
-                    <div id="accordion" layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
+                <div  data-layout="sz:'smart',stepx:40,stepy:40,title:'Prova di SMART'">
+                    <div data-layout="nx:1" style="background:orange">1</div>
+                    <div data-layout="nx:2" style="background:orange">2</div>
+                    <div data-layout="ny:2" style="background:orange">3</div>
+                    <div  data-layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
                         <div>first</div>
                         <div>second</div>
                         <div>third</div>
                         <div>fourth</div>
                     </div>
-                    <div layout="nx:1" style="background:orange">4</div>
-                    <div layout="nx:1" style="background:orange">5</div>
-                    <div layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
+                    <div data-layout="nx:1" style="background:orange">4</div>
+                    <div data-layout="nx:1" style="background:orange">5</div>
+                    <div data-layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
                         <div>first</div>
                         <div>second</div>
                         <div>third</div>
                         <div>fourth</div>
                     </div>
-                    <div layout="nx:1" style="background:orange">6</div>
-                    <div layout="nx:1" style="background:orange">7</div>
-                    <div layout="nx:1" style="background:orange">8</div>
+                    <div data-layout="nx:1" style="background:orange">6</div>
+                    <div data-layout="nx:1" style="background:orange">7</div>
+                    <div data-layout="nx:1" style="background:orange">8</div>
                 </div>
             </div>
         </div>
-        <div layout="sz:'dialog',x:650,y:100,w:300,h:300,title:'Aggiunta dinamica di closable su SMART'">
-            <div  layout="sz:'smart',stepx:40,stepy:40">
-                <button layout="nx:2" onclick="gen.call(this)">clickme</button>
+        <div data-layout="sz:'dialog',x:650,y:100,w:300,h:300,title:'Aggiunta dinamica di closable su SMART'">
+            <div  data-layout="sz:'smart',stepx:40,stepy:40">
+                <button data-layout="nx:2" onclick="gen.call(this)">clickme</button>
             </div>
 
         </div>
-        <!--<div layout="sz:'backdrop'"></div>-->
+        <!--<div data-layout="sz:'backdrop'"></div>-->
     </body>
 </html>
 
