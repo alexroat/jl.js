@@ -1,5 +1,4 @@
-
-function jl(e, layout)
+jl=function(e, layout)
 {
     //default: usa il body
     if (!e)
@@ -21,19 +20,30 @@ function jl(e, layout)
         if (jl.getStyle(e.children[i]).display != "none")
             jl(e.children[i]);
     }
-}
+};
+//schedule boot of jl
+jl.boot = function()
+{
+    window.onload = function()
+    {
+        jl();
+    };
+};
+//create a new element with defined attributes
 jl.create = function(tag, attr) {
     var e = document.createElement(tag);
     for (var k in attr)
         e.setAttribute(k, attr[k]);
     return e;
 };
+//standard MAP function : return list with the result of f() called on each element of s
 jl.map = function(f, s) {
     r = [];
     for (var i in s)
         r.push(f.apply(null, [s[i]]));
     return r;
 };
+//read and parse layout attribute as an object
 jl.readLayout = function(e) {
     try {
         return eval("[{" + (e.getAttribute("layout") || "") + "}]")[0];
@@ -41,25 +51,31 @@ jl.readLayout = function(e) {
         return {};
     }
 };
+//get layout object, if not cached read it from attribute and then cache it
 jl.getLayout = function(e) {
     if (e._jl == undefined)
         e._jl = jl.readLayout(e);
     return e._jl;
 };
+//set layout object, it does not touch the attribute
 jl.setLayout = function(e, ll) {
     var r = JSON.stringify(ll);
     e.setAttribute("layout", r.substr(1, r.length - 2));
 };
+//read the current css styles
 jl.getStyle = function(e) {
     return e.currentStyle || window.getComputedStyle(e);
 };
+//set the attributes in the object style to the element style, preexisting attributes not in "style" will stay untouched
 jl.setStyle = function(e, style) {
     for (var s in style)
         e.style[s] = style[s];
 };
+//set style in order to fit the parent
 jl.setFillParent = function(e) {
     jl.setStyle(e, {position: "absolute", top: "0px", bottom: "0px", left: "0px", right: "0px"});
 };
+//test if element has class cls
 jl.hasClass = function(e, cls) {
     var cl = e.className.split(' ');
     for (var i in cl)
@@ -67,16 +83,7 @@ jl.hasClass = function(e, cls) {
             return true;
     return false;
 };
-jl.toggleClass222 = function(e, cls) {
-    var cl2 = [];
-    var cl = e.className.split(' ');
-    for (var i in cl)
-        if (cl[i] != cls)
-            cl2.push(cls);
-    if (cl2.length == cl.lenght)
-        cl2.push(cls);
-    e.className = cl2.join(' ');
-};
+//set the class if does not exist, otherwise remove it
 jl.toggleClass = function(e, cls) {
     var cl2 = [];
     var cl = e.className.split(' ');
@@ -87,6 +94,7 @@ jl.toggleClass = function(e, cls) {
         cl2.push(cls);
     e.className = cl2.join(' ');
 };
+//get the children elements of element
 jl.children = function(e) {
     var r = [];
     for (var i = 0; i < e.children.length; i++)
@@ -94,6 +102,7 @@ jl.children = function(e) {
             r.push(e.children[i]);
     return r;
 };
+//get the current "sizes" of the element, in also compute the delta (padding+border+margin) and the tot ( plus delta)
 jl.getSizes = function(e)
 {
     var s = jl.getStyle(e);
@@ -119,13 +128,18 @@ jl.getSizes = function(e)
     r.totHeight = r.height + r.deltaHeight;
     return r;
 };
-jl.setSizes = function(e, r)
-{
-    var ss = ["width", "height", "borderLeft", "borderRight", "borderTop", "borderBottom", "paddingLeft", "paddingRight", "paddingTop", "paddingBottom", "marginLeft", "marginRight", "marginTop", "marginBottom"];
+//jl.setSizes = function(e, r)
+//{
+//    var ss = ["width", "height", "borderLeft", "borderRight", "borderTop", "borderBottom", "paddingLeft", "paddingRight", "paddingTop", "paddingBottom", "marginLeft", "marginRight", "marginTop", "marginBottom"];
+//
+//}
 
-}
+//object of sizers functions, could be extended in jquery plugin fashion
 jl.fn = {};
-//funzioni di layout
+
+
+//------------------
+//layout functions
 //------------------
 //fullpage : all children fill page
 jl.fn.fullpage = function(e) {
@@ -168,7 +182,7 @@ jl.fn.dialog = function(e) {
             test |= (y < g) << 2;
             test |= (y - g > ll.h) << 3;
             return test;
-        }
+        };
         for (var i = 0; i < cc.length; i++)
         {
             var c = cc[i];
@@ -192,7 +206,7 @@ jl.fn.dialog = function(e) {
             document.addEventListener("mouseup", mouseup);
             document.addEventListener("mousemove", mousemove);
         });
-        //gestione resize
+        //handle resize
         e.addEventListener("mousemove", function(evt) {
             var cur = {
                 0: "initial",
@@ -201,6 +215,7 @@ jl.fn.dialog = function(e) {
             }[testb(evt)];
             jl.setStyle(e, {cursor: cur});
         });
+        //start drag
         e.addEventListener("mousedown", function(evt) {
             var d = {t: testb(evt), x: evt.pageX - ll.x, y: evt.pageY - ll.y, w: evt.pageX - ll.w, h: evt.pageY - ll.h};
             if (!d.t)
@@ -286,7 +301,7 @@ jl.fn.split = function(e) {
     var c1s = jl.getSizes(c1);
     ll.dir = ll.dir == 'v' ? 'v' : 'h';
     ll.splitpos = ll.splitpos ? ll.splitpos : {'h': s.width, 'v': s.height}[ll.dir] / 2;
-    ll.splitsize = parseInt(ll.splitsize) || 4
+    ll.splitsize = parseInt(ll.splitsize) || 4;
     if (!e.layout)
     {
         e.layout = {};
@@ -382,7 +397,7 @@ jl.fn.tabs = function(e) {
             jl.toggleClass(flap, "selected");
     }
 
-}
+};
 //flaps: set children in hiddable flaps ( you can choose orientation )
 jl.fn.flaps = function(e) {
     var ll = jl.getLayout(e);
@@ -419,7 +434,7 @@ jl.fn.flaps = function(e) {
                 };
             })(i));
         }
-        //schedula la rivalidazione del padre
+        //schedule parent revalidation
         setTimeout(function() {
             jl(e.parentNode);
         }, 0);
@@ -448,7 +463,7 @@ jl.fn.flaps = function(e) {
         if ((flapsel && !issel) || (!flapsel && issel))
             jl.toggleClass(flap, "selected");
     }
-}
+};
 //sequence : set sequence of tabs
 jl.fn.sequence = function(e) {
     var ll = jl.getLayout(e);
@@ -479,7 +494,7 @@ jl.fn.sequence = function(e) {
         jl.toggleClass(e.layout.prev, "jlbutton");
         jl.toggleClass(e.layout.next, "jlbutton");
     }
-    var cc = jl.children(e)
+    var cc = jl.children(e);
     for (var i = 0; i < cc.length; i++)
     {
         var c = cc[i];
@@ -489,7 +504,7 @@ jl.fn.sequence = function(e) {
         jl.setStyle(e.layout.prev, {position: "absolute", top: cmdtop + "px", left: "3px"});
         jl.setStyle(e.layout.next, {position: "absolute", top: cmdtop + "px", right: "3px"});
     }
-}
+};
 //accordion : set children in an accordion
 jl.fn.accordion = function(e)
 {
@@ -519,7 +534,7 @@ jl.fn.accordion = function(e)
             })(i));
         }
     }
-    //calcola il resto
+    //compute the amount of free space
     var h = jl.getSizes(e).height;
     for (var i = 0; i < e.layout.flaps.length; i++)
         h -= jl.getSizes(e.layout.flaps[i]).totHeight;
@@ -529,10 +544,10 @@ jl.fn.accordion = function(e)
         var c = e.layout.cc[i];
         var f = e.layout.flaps[i];
         var issel = (i == ll.sel);
-        //posizionamento flap
+        //flap positioning
         jl.setStyle(f, {position: "absolute", top: offs + "px", left: "0px", right: "0px", overflow: "hidden", cursor: "pointer"});
         offs += jl.getSizes(f).totHeight;
-        //posizionamento child
+        //child positioning
         var s = {position: "absolute", top: offs + "px", left: "0px", right: "0px", overflow: "hidden"};
         s.height = (issel ? (h - jl.getSizes(c).deltaHeight) : 0) + "px";
         s.display = (issel ? "initial" : "none");
@@ -542,8 +557,8 @@ jl.fn.accordion = function(e)
         if ((flapsel && !issel) || (!flapsel && issel))
             jl.toggleClass(f, "selected");
     }
-}
-//snap : grid based fluid layout
+};
+//snap : grid based fluid layout, at the end of the line it starts a new line of children computing the max space taken by the first
 jl.fn.snap = function(e)
 {
     var ll = jl.getLayout(e);
@@ -577,8 +592,8 @@ jl.fn.snap = function(e)
         ox = nox;
     }
 
-}
-//smart : smart place children along a grid
+};
+//smart : smart place children along a grid but try to cover all the free spaces
 jl.fn.smart = function(e)
 {
     var ll = jl.getLayout(e);
@@ -589,7 +604,7 @@ jl.fn.smart = function(e)
     ll.marginy = parseInt(ll.marginy) || 4;
     var dw = ll.stepx + 2 * ll.marginx;
     var dh = ll.stepy + 2 * ll.marginy;
-    var map = {}
+    var map = {};
     for (var j = 0; j < e.children.length; j++)
     {
         var c = e.children[j];
@@ -622,12 +637,11 @@ jl.fn.smart = function(e)
                 }
             }
     }
-}
-//closable : closable container
+};
+//closable : closable container, with an x to close it
 jl.fn.closable = function(e)
 {
     var ll = jl.getLayout(e);
-    ll.dir
     if (!e.layout)
     {
         e.layout = {};
@@ -642,12 +656,11 @@ jl.fn.closable = function(e)
             jl(e.parentNode);
         });
     }
-}
-//backdrop: closable backdrop
+};
+//backdrop: closable backdrop --- not used yet
 jl.fn.backdrop = function(e)
 {
     var ll = jl.getLayout(e);
-    ll.dir
     if (!e.layout)
     {
         e.layout = {};
@@ -661,5 +674,5 @@ jl.fn.backdrop = function(e)
         });
     }
 
-}
+};
 
