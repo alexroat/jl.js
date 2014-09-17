@@ -163,11 +163,21 @@ jl.getSizes = function(e)
     r.totHeight = r.height + r.deltaHeight;
     return r;
 };
-//jl.setSizes = function(e, r)
-//{
-//    var ss = ["width", "height", "borderLeft", "borderRight", "borderTop", "borderBottom", "paddingLeft", "paddingRight", "paddingTop", "paddingBottom", "marginLeft", "marginRight", "marginTop", "marginBottom"];
-//
-//}
+
+//set the size in pixels
+jl.setSizes = function(e, r)
+{
+    ns={};
+    var ss = ["width", "height", "borderLeft", "borderRight", "borderTop", "borderBottom", "paddingLeft", "paddingRight", "paddingTop", "paddingBottom", "marginLeft", "marginRight", "marginTop", "marginBottom"];
+    for (var i in ss)
+        if (r[ss[i]]!==undefined)
+            ns[ss[i]]=r[ss[i]]+"px";
+    if (r["position"])
+        ns["position"]=r["position"];
+    jl.setStyle(e,ns);
+};
+
+
 
 //object of sizers functions, could be extended in jquery plugin fashion
 jl.fn = {};
