@@ -22,7 +22,7 @@ and open the template in the editor.
     cursor:default;
 }
 
-button[layout] {
+button[layout],button[data-layout] {
     box-sizing: content-box;
 }
 
