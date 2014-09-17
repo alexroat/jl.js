@@ -17,7 +17,7 @@ jl = function(e, layout)
     //children process
     for (var i = 0; i < e.children.length; i++)
     {
-        if (jl.getStyle(e.children[i]).display != "none")
+        if (jl.getStyle(e.children[i]).display !== "none")
             jl(e.children[i]);
     }
 };
@@ -53,7 +53,7 @@ jl.readLayout = function(e) {
 };
 //get layout object, if not cached read it from attribute and then cache it
 jl.getLayout = function(e) {
-    if (e._jl == undefined)
+    if (e._jl === undefined)
         e._jl = jl.readLayout(e);
     return e._jl;
 };
@@ -79,7 +79,7 @@ jl.setFillParent = function(e) {
 jl.hasClass = function(e, cls) {
     var cl = e.className.split(' ');
     for (var i in cl)
-        if (cl[i] == cls)
+        if (cl[i] === cls)
             return true;
     return false;
 };
@@ -88,9 +88,9 @@ jl.toggleClass = function(e, cls) {
     var cl2 = [];
     var cl = e.className.split(' ');
     for (var i in cl)
-        if (cl[i] != cls)
+        if (cl[i] !== cls)
             cl2.push(cl[i]);
-    if (cl2.length == cl.length)
+    if (cl2.length === cl.length)
         cl2.push(cls);
     e.className = cl2.join(' ');
 };
@@ -214,7 +214,7 @@ jl.fn.dialog = function(e) {
         for (var i = 0; i < cc.length; i++)
         {
             var c = cc[i];
-            if (c == e.layout.header)
+            if (c === e.layout.header)
                 continue;
             jl.setStyle(c, {position: "absolute", top: e.layout.header.offsetHeight + "px", bottom: "0px", left: "0px", right: "0px", overflow: "auto"});
         }
@@ -292,7 +292,7 @@ jl.fn.fitme = function(e) {
 //box : all children handled by weight p and minimum size s
 jl.fn.box = function(e) {
     var ll = jl.getLayout(e);
-    ll.dir = ll.dir == 'v' ? 'v' : 'h';
+    ll.dir = ll.dir === 'v' ? 'v' : 'h';
     var ts = jl.getSizes(e)[{'h': "width", 'v': "height"}[ll.dir]];
     var tp = 0;
     var cc = jl.children(e);
@@ -312,7 +312,7 @@ jl.fn.box = function(e) {
         var s = cll.s;
         if (tp)
             s += ts * cll.p / tp;
-        if (ll.dir == "h")
+        if (ll.dir === "h")
             jl.setStyle(cc[i], {position: "absolute", top: "0px", bottom: "0px", left: offset + "px", width: (s - cs.deltaWidth) + "px"});
         else
             jl.setStyle(cc[i], {position: "absolute", left: "0px", right: "0px", top: offset + "px", height: (s - cs.deltaHeight) + "px"});
@@ -327,7 +327,7 @@ jl.fn.split = function(e) {
     var s = jl.getSizes(e);
     var c0s = jl.getSizes(c0);
     var c1s = jl.getSizes(c1);
-    ll.dir = ll.dir == 'v' ? 'v' : 'h';
+    ll.dir = ll.dir === 'v' ? 'v' : 'h';
     ll.splitpos = ll.splitpos ? ll.splitpos : {'h': s.width, 'v': s.height}[ll.dir] / 2;
     ll.splitsize = parseInt(ll.splitsize) || 4;
     if (!e.layout)
@@ -354,7 +354,7 @@ jl.fn.split = function(e) {
         });
         jl.setStyle(bar, {background: "rgb(154, 161, 165)", "z-index": 1});
     }
-    if (ll.dir == 'h')
+    if (ll.dir === 'h')
     {
         var c0w = ll.splitpos - c0s.deltaWidth;
         var c1w = s.width - ll.splitpos - ll.splitsize - c1s.deltaWidth;
@@ -398,7 +398,7 @@ jl.fn.tabs = function(e) {
             e.layout.flaps.push(flap);
             flap.textContent = cll.title || "tab " + i;
             header.appendChild(flap);
-            if (ll.dir == "top" || ll.dir == "bottom")
+            if (ll.dir === "top" || ll.dir === "bottom")
                 jl.setStyle(flap, {display: "inline-block"});
             jl.bindEvent(flap,"click", (function(i) {
                 return function() {
@@ -416,7 +416,7 @@ jl.fn.tabs = function(e) {
     for (var i = 0; i < e.layout.cc.length; i++)
     {
         var c = e.layout.cc[i];
-        var issel = (i == ll.sel);
+        var issel = (i === ll.sel);
         cstyle.display = issel ? "initial" : "none";
         jl.setStyle(c, cstyle);
         var flap = e.layout.flaps[i];
@@ -451,11 +451,11 @@ jl.fn.flaps = function(e) {
             e.layout.flaps.push(flap);
             flap.textContent = cll.title || "flap " + i;
             header.appendChild(flap);
-            if (ll.dir == "top" || ll.dir == "bottom")
+            if (ll.dir === "top" || ll.dir === "bottom")
                 jl.setStyle(flap, {display: "inline-block"});
             jl.bindEvent(flap,"click", (function(i) {
                 return function() {
-                    ll.sel = (ll.sel == i) ? null : i;
+                    ll.sel = (ll.sel === i) ? null : i;
                     jl.setLayout(e, ll);
                     jl(e);
                     jl(e.parentNode);
@@ -478,7 +478,7 @@ jl.fn.flaps = function(e) {
     for (var i = 0; i < e.layout.cc.length; i++)
     {
         var c = e.layout.cc[i];
-        var issel = (i == ll.sel);
+        var issel = (i === ll.sel);
         cstyle.display = issel ? "initial" : "none";
         jl.setStyle(c, cstyle);
         var cl = jl.getLayout(c);
@@ -526,7 +526,7 @@ jl.fn.sequence = function(e) {
     for (var i = 0; i < cc.length; i++)
     {
         var c = cc[i];
-        jl.setStyle(c, {"display": (ll.sel == i ? "initial" : "none")});
+        jl.setStyle(c, {"display": (ll.sel === i ? "initial" : "none")});
         jl.setStyle(c, {position: "absolute", top: "0px", bottom: "0px", left: "0px", right: "0px"});
         var cmdtop = (e.offsetHeight - e.layout.prev.offsetHeight) / 2;
         jl.setStyle(e.layout.prev, {position: "absolute", top: cmdtop + "px", left: "3px"});
@@ -571,7 +571,7 @@ jl.fn.accordion = function(e)
     {
         var c = e.layout.cc[i];
         var f = e.layout.flaps[i];
-        var issel = (i == ll.sel);
+        var issel = (i === ll.sel);
         //flap positioning
         jl.setStyle(f, {position: "absolute", top: offs + "px", left: "0px", right: "0px", overflow: "hidden", cursor: "pointer"});
         offs += jl.getSizes(f).totHeight;
@@ -650,7 +650,7 @@ jl.fn.smart = function(e)
                 var ok = true;
                 for (var ty = 0; ok && ty < cll.ny; ty++)
                     for (var tx = 0; ok && tx < cll.nx; tx++)
-                        ok = (map[((ix + tx) + "," + (iy + ty))] == undefined) && (!ix || (ix + cll.nx) <= lim);
+                        ok = (map[((ix + tx) + "," + (iy + ty))] === undefined) && (!ix || (ix + cll.nx) <= lim);
                 //se trova lo spazio piazza l'elemento
                 if (ok)
                 {
