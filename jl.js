@@ -83,17 +83,25 @@ jl.hasClass = function(e, cls) {
             return true;
     return false;
 };
-//set the class if does not exist, otherwise remove it
-jl.toggleClass = function(e, cls) {
+//set the class if does not exist, otherwise remove it (b force to false o true the test, that is set or unset the class)
+jl.toggleClass=function(e,cls,b)
+{
+    var clsl=cls.split(' ');
+    if (clsl.length!==1)
+        return jl.map(function(c){jl.toggleClass(e,c,b);},clsl);
     var cl2 = [];
+    var bu=(b==undefined);
+    var bf=(b==false);
     var cl = e.className.split(' ');
-    for (var i in cl)
-        if (cl[i] !== cls)
+    for (i in cl)
+        if ((cl[i]===cls) && (bu||bf))
+            continue;
+        else
             cl2.push(cl[i]);
-    if (cl2.length === cl.length)
+    if ((cl2.length === cl.length) && (bu||b))
         cl2.push(cls);
     e.className = cl2.join(' ');
-};
+}
 //bind event
 jl.bindEvent = function(el, ev, fn) {
     if (el.addEventListener) { // modern browsers including IE9+
@@ -196,8 +204,7 @@ jl.fn.dialog = function(e) {
         e.layout = {};
         e.layout.header = jl.create("div");
         e.appendChild(e.layout.header);
-        jl.toggleClass(e.layout.header, "dialogheader");
-        jl.toggleClass(e.layout.header, "jlexclude");
+        jl.toggleClass(e.layout.header, "dialogheader jlexclude",true);
         e.layout.header.textContent = ll.title || "dialog";
         jl.setStyle(e.layout.header, {position: "absolute", top: "0px", left: "0px", right: "0px"});
         var cc = jl.children(e);
@@ -385,8 +392,7 @@ jl.fn.tabs = function(e) {
         var header = jl.create("div");
         e.layout.header = header;
         e.appendChild(e.layout.header);
-        jl.toggleClass(e.layout.header, "jlexclude");
-        jl.toggleClass(e.layout.header, "tabheader");
+        jl.toggleClass(e.layout.header, "jlexclude tabheader",true);
         var hstyle = {"top": "0px", "left": "0px", "bottom": "0px", "right": "0px", "position": "absolute"};
         delete hstyle[{"top": "bottom", "left": "right", "bottom": "top", "right": "left"}[ll.dir]];
         jl.setStyle(header, hstyle);
@@ -420,9 +426,7 @@ jl.fn.tabs = function(e) {
         cstyle.display = issel ? "initial" : "none";
         jl.setStyle(c, cstyle);
         var flap = e.layout.flaps[i];
-        var flapsel = jl.hasClass(flap, "selected");
-        if ((flapsel && !issel) || (!flapsel && issel))
-            jl.toggleClass(flap, "selected");
+        jl.toggleClass(flap,"selected",issel);
     }
 
 };
@@ -438,8 +442,7 @@ jl.fn.flaps = function(e) {
         var header = jl.create("div");
         e.layout.header = header;
         e.appendChild(e.layout.header);
-        jl.toggleClass(e.layout.header, "jlexclude");
-        jl.toggleClass(e.layout.header, "tabheader");
+        jl.toggleClass(e.layout.header, "jlexclude tabheader",true);
         var hstyle = {"top": "0px", "left": "0px", "bottom": "0px", "right": "0px", "position": "absolute"};
         delete hstyle[{"top": "bottom", "left": "right", "bottom": "top", "right": "left"}[ll.dir]];
         jl.setStyle(header, hstyle);
@@ -487,9 +490,7 @@ jl.fn.flaps = function(e) {
             esize += cl[{"top": 'h', "left": 'w', "bottom": 'h', "right": 'w'}[ll.dir]] || 0;
         ll[{"top": 'h', "left": 'w', "bottom": 'h', "right": 'w'}[ll.dir]] = esize;
         var flap = e.layout.flaps[i];
-        var flapsel = jl.hasClass(flap, "selected");
-        if ((flapsel && !issel) || (!flapsel && issel))
-            jl.toggleClass(flap, "selected");
+        jl.toggleClass(flap, "selected",issel);
     }
 };
 //sequence : set sequence of tabs
@@ -501,7 +502,7 @@ jl.fn.sequence = function(e) {
         e.layout = {};
         e.layout.prev = jl.create("span");
         e.layout.prev.textContent = "<";
-        jl.toggleClass(e.layout.prev, "jlexclude");
+        jl.toggleClass(e.layout.prev, "jlexclude",true);
         e.appendChild(e.layout.prev);
         jl.bindEvent(e.layout.prev,"click", function() {
             var n = jl.children(e).length;
@@ -511,7 +512,7 @@ jl.fn.sequence = function(e) {
         });
         e.layout.next = jl.create("span");
         e.layout.next.textContent = ">";
-        jl.toggleClass(e.layout.next, "jlexclude");
+        jl.toggleClass(e.layout.next, "jlexclude",true);
         e.appendChild(e.layout.next);
         jl.bindEvent(e.layout.next,"click", function() {
             var n = jl.children(e).length;
@@ -519,8 +520,8 @@ jl.fn.sequence = function(e) {
             jl.setLayout(e, ll);
             jl(e);
         });
-        jl.toggleClass(e.layout.prev, "jlbutton");
-        jl.toggleClass(e.layout.next, "jlbutton");
+        jl.toggleClass(e.layout.prev, "jlbutton",true);
+        jl.toggleClass(e.layout.next, "jlbutton",true);
     }
     var cc = jl.children(e);
     for (var i = 0; i < cc.length; i++)
@@ -551,8 +552,7 @@ jl.fn.accordion = function(e)
             e.layout.flaps.push(flap);
             flap.textContent = cll.title || "section " + i;
             e.insertBefore(flap, c);
-            jl.toggleClass(flap, "jlaccordionflap");
-            jl.toggleClass(flap, "jlexclude");
+            jl.toggleClass(flap, "jlaccordionflap jlexclude",true);
             jl.bindEvent(flap,"click", (function(i) {
                 return function() {
                     ll.sel = i;
@@ -581,9 +581,7 @@ jl.fn.accordion = function(e)
         s.display = (issel ? "initial" : "none");
         jl.setStyle(c, s);
         offs += (issel ? h : 0);
-        var flapsel = jl.hasClass(f, "selected");
-        if ((flapsel && !issel) || (!flapsel && issel))
-            jl.toggleClass(f, "selected");
+        jl.toggleClass(f, "selected",issel);
     }
 };
 //snap : grid based fluid layout, at the end of the line it starts a new line of children computing the max space taken by the first
