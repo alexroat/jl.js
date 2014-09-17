@@ -23,31 +23,31 @@ and open the template in the editor.
 }
 
 button[layout] {
-box-sizing: content-box;
+    box-sizing: content-box;
 }
 
 .jlbutton
 {
-cursor:default;
-padding: 10px;
-border: 1px solid darkgray;
-border-radius: 5px;
+    cursor:default;
+    padding: 10px;
+    border: 1px solid darkgray;
+    border-radius: 5px;
 }
 
 
 
 .dialogheader
 {
-background: rgb(111, 173, 202);
-background-image: linear-gradient(rgb(222, 239, 255) 0%, rgb(152, 190, 222) 100%);
-color: darkslategrey;
-font-weight: bolder;
-font-size: larger;
+    background: rgb(111, 173, 202);
+    background-image: linear-gradient(rgb(222, 239, 255) 0%, rgb(152, 190, 222) 100%);
+    color: darkslategrey;
+    font-weight: bolder;
+    font-size: larger;
 }
 
 .jlaccordionflap
 {
-border: 1px solid darkgray;
+    border: 1px solid darkgray;
 }
 
 
@@ -67,18 +67,6 @@ div.selected
     color:white;
 }
 
-/*span.jlflaps {
-border: 1px solid gray;
-margin: 1px;
-padding: 3px;
-cursor: pointer;
-background-color: whitesmoke;
-font-family: cursive;
-font-weight: 700;
-position:relative;
-bottom:-6px;
-}*/
-
 
 .HalfCircleLeft
 {
@@ -93,6 +81,6 @@ bottom:-6px;
 
 .nicepanel
 {
-border: 1px solid darkgrey;
-margin:5px;
+    border: 1px solid darkgrey;
+    margin:5px;
 }
