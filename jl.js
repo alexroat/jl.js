@@ -38,6 +38,8 @@ jl = function(e, layout)
         jl.setStyle(e, st);
         jl.fn[ll.sz](e);
     }
+    
+    
     //children process
     for (var i = 0; i < e.children.length; i++)
     {
@@ -380,7 +382,10 @@ jl.fn.box = function(e) {
         var cs = jl.getSizes(cc[i]);
         var s = cll.s;
         if (tp)
-            s += ts * cll.p / tp;
+        {
+            var ds=ts * cll.p / tp;
+            s += ds>=0?ds:0;
+        }
         if (ll.dir === "h")
             jl.setStyle(cc[i], {position: "absolute", top: "0px", bottom: "0px", left: offset + "px", width: jl.clip(s - cs.deltaWidth) + "px"});
         else
