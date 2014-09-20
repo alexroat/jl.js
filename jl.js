@@ -61,7 +61,7 @@ jl.clip=function(x)
 //set the text
 jl.setText=function(e,txt)
 {
-	if (e.textContent)
+	if (e.textContent!==undefined)
 		e.textContent=txt;
 	else
 		e.innerText=txt;
