@@ -140,7 +140,7 @@ jl.toggleClass=function(e,cls,b)
         while ((i=cl.indexOf(cls))>=0)
             cl.splice(i);
     e.className = cl.join(' ');
-}
+};
 //bind event
 jl.bindEvent = function(el, ev, fn) {
     if (el.addEventListener) { // modern browsers including IE9+
@@ -234,8 +234,9 @@ jl.fn = {};
 //fullpage : all children fill page
 jl.fn.fullpage = function(e) {
     jl.setStyle(e, {position: "fixed", top: "0px", bottom: "0px", left: "0px", right: "0px"});
-    for (var i = 0; i < e.children.length; i++)
-        jl.setStyle(e.children[i], {position: "absolute", top: "0px", bottom: "0px", left: "0px", right: "0px"});
+    var cc=jl.children(e);
+    for (var i = 0; i < cc.length; i++)
+        jl.setStyle(cc[i], {position: "absolute", top: "0px", bottom: "0px", left: "0px", right: "0px"});
     if (!e._jlcfg)
     {
         e._jlcfg = {};
@@ -388,8 +389,9 @@ jl.fn.box = function(e) {
 //split : 2 children, one constant, other dynamic
 jl.fn.split = function(e) {
     var ll = jl.getLayout(e);
-    var c0 = e.children[0];
-    var c1 = e.children[1];
+    var cc=jl.children(e);
+    var c0 = cc[0];
+    var c1 = cc[1];
     var s = jl.getSizes(e);
     var c0s = jl.getSizes(c0);
     var c1s = jl.getSizes(c1);
@@ -648,6 +650,7 @@ jl.fn.snap = function(e)
 {
     var ll = jl.getLayout(e);
     var s = jl.getSizes(e);
+    var cc=jl.children(e);
     ll.stepx = parseInt(ll.stepx) || 24;
     ll.marginx = parseInt(ll.marginx) || 4;
     ll.stepy = parseInt(ll.stepy) || 24;
@@ -657,9 +660,9 @@ jl.fn.snap = function(e)
     var dw = ll.stepx + 2 * ll.marginx;
     var dh = ll.stepy + 2 * ll.marginy;
     var maxny = 0;
-    for (var j = 0; j < e.children.length; j++)
+    for (var j = 0; j < cc.length; j++)
     {
-        var c = e.children[j];
+        var c = cc[j];
         var cll = jl.getLayout(c);
         cll.nx = parseInt(cll.nx) || 1;
         cll.ny = parseInt(cll.ny) || 1;
@@ -683,6 +686,7 @@ jl.fn.smart = function(e)
 {
     var ll = jl.getLayout(e);
     var s = jl.getSizes(e);
+    var cc=jl.children(e);
     ll.stepx = parseInt(ll.stepx) || 24;
     ll.marginx = parseInt(ll.marginx) || 4;
     ll.stepy = parseInt(ll.stepy) || 24;
@@ -690,9 +694,9 @@ jl.fn.smart = function(e)
     var dw = ll.stepx + 2 * ll.marginx;
     var dh = ll.stepy + 2 * ll.marginy;
     var map = {};
-    for (var j = 0; j < e.children.length; j++)
+    for (var j = 0; j < cc.length; j++)
     {
-        var c = e.children[j];
+        var c = cc[j];
         var cll = jl.getLayout(c);
         cll.nx = parseInt(cll.nx) || 1;
         cll.ny = parseInt(cll.ny) || 1;
