@@ -123,31 +123,23 @@ jl.setFillParent = function(e) {
 };
 //test if element has class cls
 jl.hasClass = function(e, cls) {
-    var cl = e.className.split(' ');
-    for (var i=0;i<cl.length;i++)
-        if (cl[i] === cls)
-            return true;
-    return false;
+    var cl = (e.className||"").split(' ');
+    return (cl.indexOf(cls)>=0);
 };
-//set the class if does not exist, otherwise remove it (b force to false o true the test, that is set or unset the class)
 jl.toggleClass=function(e,cls,b)
 {
-	var ttt=cls;
-    var clsl=cls.split(' ');
-    if (clsl.length!==1)
-        return jl.map(function(c){jl.toggleClass(e,c,b);},clsl);
-    var cl2 = [];
-    var bu=(b==undefined);
-    var bf=(b==false);
-    var cl = e.className.split(' ');
-    for (var i=0;i<cl.length;i++)
-        if ((cl[i]===cls) && (bu||bf))
-            continue;
-        else
-            cl2.push(cl[i]);
-    if ((cl2.length === cl.length) && (bu||b))
-        cl2.push(cls);
-    e.className = cl2.join(' ');
+    var cl2=(cls||"").split(' ');
+    if (cl2.length!==1)
+        return jl.map(function(c){jl.toggleClass(e,c,b);},cl2);
+    var cl = (e.className||"").split(' ');
+    var hc=jl.hasClass(e,cls);
+    var i;
+    if (!hc && b)
+        cl.push(cls);
+    if (hc && !b)
+        while ((i=cl.indexOf(cls))>=0)
+            cl.splice(i);
+    e.className = cl.join(' ');
 }
 //bind event
 jl.bindEvent = function(el, ev, fn) {
