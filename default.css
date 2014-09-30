@@ -1,0 +1,91 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 17-set-2014, 22.43.20
+    Author     : alex
+*/
+
+
+.jlexclude{
+    background:rgb(237, 239, 241);
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor:default;
+}
+
+
+[layout],[data-layout] ,[layout]>*,[data-layout]>*{
+    box-sizing: content-box;
+}
+
+button[layout],button[data-layout] {
+    box-sizing: content-box;
+}
+
+.jlbutton
+{
+    cursor:default;
+    padding: 10px;
+    border: 1px solid darkgray;
+    border-radius: 5px;
+}
+
+
+
+.dialogheader
+{
+    background: rgb(111, 173, 202);
+    background-image: linear-gradient(rgb(222, 239, 255) 0%, rgb(152, 190, 222) 100%);
+    color: darkslategrey;
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.jlaccordionflap
+{
+    border: 1px solid darkgray;
+}
+
+
+
+.tabheader > div
+{
+    background:whitesmoke;
+    cursor: pointer;
+    border:1px solid gray;
+    padding:3px;
+}
+
+
+div.selected
+{
+    background:rgb(122, 156, 172);
+    color:white;
+}
+
+
+.HalfCircleLeft
+{
+    margin: 100px;
+    height: 100px;
+    width: 50px;
+    border-radius: 0 50px 50px 0;
+    background-color: #cfa040;
+    position: relative;
+}
+
+
+.nicepanel
+{
+    border: 1px solid darkgrey;
+    margin:5px;
+}

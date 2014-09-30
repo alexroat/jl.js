@@ -1,301 +1,194 @@
- <!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
-<head>
-<script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-48707894-2");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
-<meta charset="utf-8">
-<style>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="default.css">
+        <script type="text/javascript" src="jl.js"></script>
+        <script type="text/javascript">
+            jl.boot();
+        </script>
 
-.jlexclude{
-    background:rgb(237, 239, 241);
-    overflow: hidden;
-    white-space: nowrap;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor:default;
-}
+        <script>
+            var gen = function()
+            {
+                var n = document.createElement("div");
+                var nx = 1 + Math.floor(Math.random() * 3);
+                var ny = 1 + Math.floor(Math.random() * 3);
+                n.setAttribute("layout", "nx:" + nx + ",ny:" + ny + ",sz:'closable'");
+                var color = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",0.5)";
+                jl.setStyle(n, {border: "1px solid grey", margin: "3px", background: color});
+                this.parentNode.appendChild(n);
+                jl(this.parentNode);
 
-button[layout] {
-box-sizing: content-box;
-}
-
-.jlbutton
-{
-cursor:default;
-padding: 10px;
-border: 1px solid darkgray;
-border-radius: 5px;
-}
-
-
-
-.dialogheader
-{
-background: rgb(111, 173, 202);
-background-image: linear-gradient(rgb(222, 239, 255) 0%, rgb(152, 190, 222) 100%);
-color: darkslategrey;
-font-weight: bolder;
-font-size: larger;
-}
-
-.jlaccordionflap
-{
-border: 1px solid darkgray;
-}
-
-
-
-.tabheader > div
-{
-    background:whitesmoke;
-    cursor: pointer;
-    border:1px solid gray;
-    padding:3px;
-}
-
-
-div.selected
-{
-    background:rgb(122, 156, 172);
-    color:white;
-}
-
-/*span.jlflaps {
-border: 1px solid gray;
-margin: 1px;
-padding: 3px;
-cursor: pointer;
-background-color: whitesmoke;
-font-family: cursive;
-font-weight: 700;
-position:relative;
-bottom:-6px;
-}*/
-
-
-.HalfCircleLeft
-{
-    margin: 100px;
-    height: 100px;
-    width: 50px;
-    border-radius: 0 50px 50px 0;
-    background-color: #cfa040;
-    position: relative;
-}
-
-
-.nicepanel
-{
-border: 1px solid darkgrey;
-margin:5px;
-}
-
-
-</style>
-<script type="text/javascript" src="jl.js"> </script>
-
-
-<script type="text/javascript">
-window.onload=function()
-{
-	jl();
-}
-</script>
-</head>
-<body layout="sz:'fullpage'">
-	<div layout="sz:'box',dir:'v'">
-		<div layout="h:20" style="border:2px solid grey;oveflow:hidden;background:beige">Please visit the <a href="https://github.com/alexroat/jl.js/">JL.js project page</a></div>
-		<div layout="sz:'box',p:1" style="margin:2px;">
-            <div layout="sz:'flaps',dir:'left'" style="border:1px solid lightgrey;margin:2px;">
-					<div layout="w:50">first</div>
-					<div layout="w:60">second</div>
-					<div layout="w:70">third</div>
-					<div layout="w:80">fourth</div>
-			        <div id="accordion" layout="w:100,sz:'accordion',title:'accordion'">
-					        <div>first</div>
-					        <div>second</div>
-					        <div>third</div>
-					        <div>fourth</div>
-			        </div>
-			        <div layout="w:200,sz:'split',dir:'v',splitpos:100,title:'split'">
-				        <div style="border:1px solid black;padding:5px;margin:5px;">ciao</div>
-				        <div style="border:1px solid black;padding:5px;margin:5px;">mondo</div>
-			        </div>
-    	    </div>
-			<div layout="p:1,sz:'split',dir:'v'">
-				<div layout="sz:'split',dir:'h',splitpos:150">
-					<div id="accordion" layout="s:100,sz:'accordion'" class="nicepanel">
-						<div>first</div>
-						<div>second</div>
-						<div>third</div>
-						<textarea layout="title:'embedded textarea'" style="width:100%">fourth</textarea>
-					</div>
-					<div layout="sz:'sequence',dir:'h'" class="nicepanel">
-						<div>first</div>
-						<div>second</div>
-						<div>third</div>
-						<div>fourth</div>
-					</div>
-				</div>
-				<div layout="sz:'split',dir:'h'">
-					<div layout="sz:'tabs',dir:'h'" class="nicepanel">
-						<div>first</div>
-						<div>second</div>
-						<div>third</div>
-						<div>fourth</div>
-					</div>
-					<div layout="sz:'split',dir:'v'">
-						<div  layout="sz:'snap',stepx:40,stepy:40">
-							<div layout="nx:4" style="background:orange">this is snap</div>
-							<div layout="nx:1" style="background:orange">1</div>
-							<div layout="nx:2" style="background:orange">2</div>
-							<div layout="ny:2" style="background:orange">3</div>
-							<div layout="nx:1" style="background:orange">4</div>
-							<div layout="nx:1" style="background:orange">5</div>
-							<div layout="nx:1" style="background:orange">6</div>
-							<div layout="nx:1" style="background:orange">7</div>
-							<div layout="nx:1" style="background:orange">8</div>
-						</div>
-						<div  layout="sz:'smart',stepx:40,stepy:40">
-							<div layout="nx:4" style="background:orange">this is smart</div>
-							<div layout="nx:1" style="background:orange">1</div>
-							<div layout="nx:2" style="background:orange">2</div>
-							<div layout="ny:2" style="background:orange">3</div>
-							<div layout="nx:1" style="background:orange">4</div>
-							<div layout="nx:1" style="background:orange">5</div>
-							<div layout="nx:1" style="background:orange">6</div>
-							<div layout="nx:1" style="background:orange">7</div>
-							<div layout="nx:1" style="background:orange">8</div>
-							<button layout="nx:1">clickme</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div layout="w:200,sz:'box',dir:'v'">
-				<div layout="h:100,sz:'closable'" style="border:1px solid lightgrey;margin:2px;">
-					<div>close me</div>
-				</div>
-				<div id="flap" layout="sz:'tabs',dir:'right',p:1" style="border:1px solid lightgrey;margin:2px;">
-					<div>first</div>
-					<div>second</div>
-					<div>third</div>
-					<div>fourth</div>
-				</div>
-			</div>
-		</div>
-		<div id="footer" layout="sz:'flaps',dir:'top',h:100" style="border:1px solid lightgrey;margin:2px;">
-					<div>first</div>
-					<div layout="h:50">second</div>
-					<div layout="h:50">third</div>
-					<div layout="h:50">fourth</div>
-	    </div>
-	</div>
-    <div layout="sz:'dialog',x:200,y:300,w:400,h:400,title:'Accordion con vari container fluid'">
-        <div layout="sz:'accordion'">
-                
-			    <div  layout="sz:'snap',stepx:40,stepy:40,title:'Prova di SNAP'">
-                    <div layout="nx:1" style="background:orange">1</div>
-                    <div layout="nx:2" style="background:orange">2</div>
-                    <div layout="ny:2" style="background:orange">3</div>
-                    <div id="accordion" layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
+            };
+        </script>
+    </head>
+    <body data-layout="sz:'fullpage'">
+        <div data-layout="sz:'box',dir:'v'">
+            <div data-layout="h:20" style="border:2px solid grey;overflow:hidden;background:beige">Please visit the <a href="https://github.com/alexroat/jl.js/">JL.js project page</a></div>
+            <div data-layout="sz:'box',p:1" style="margin:2px;">
+                <div data-layout="sz:'flaps',dir:'left'" style="border:1px solid lightgrey;margin:2px;">
+                    <div data-layout="w:50">first</div>
+                    <div data-layout="w:60">second</div>
+                    <div data-layout="w:70">third</div>
+                    <div data-layout="w:80">fourth</div>
+                    <div id="accordion" data-layout="w:100,sz:'accordion',title:'accordion'">
                         <div>first</div>
                         <div>second</div>
                         <div>third</div>
                         <div>fourth</div>
                     </div>
-                    <div layout="nx:1" style="background:orange">4</div>
-                    <div layout="nx:1" style="background:orange">5</div>
-                    <div layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
-                        <div>first</div>
-			            <div>second</div>
-                        <div>third</div>
-			            <div>fourth</div>
+                    <div data-layout="w:200,sz:'split',dir:'v',splitpos:100,title:'split'">
+                        <div style="border:1px solid black;padding:5px;margin:5px;">ciao</div>
+                        <div style="border:1px solid black;padding:5px;margin:5px;">mondo</div>
                     </div>
-                    <div layout="nx:1" style="background:orange">6</div>
-                    <div layout="nx:1" style="background:orange">7</div>
-                    <div layout="nx:1" style="background:orange">8</div>
                 </div>
-                <div layout="sz:'sequence',dir:'h',title:'Prova di SEQUENCE'">
+                <div data-layout="p:1,sz:'split',dir:'v'">
+                    <div data-layout="sz:'split',dir:'h',splitpos:150">
+                        <div  data-layout="s:100,sz:'accordion'" class="nicepanel">
+                            <div>first</div>
+                            <div>second</div>
+                            <div>third</div>
+                            <div>fourth</div>
+                        </div>
+                        <div data-layout="sz:'sequence',dir:'h'" class="nicepanel">
+                            <div>first</div>
+                            <div>second</div>
+                            <div>third</div>
+                            <div>fourth</div>
+                        </div>
+                    </div>
+                    <div data-layout="sz:'split',dir:'h'">
+                        <div data-layout="sz:'tabs',dir:'h'" class="nicepanel">
+                            <div>first</div>
+                            <div>second</div>
+                            <div>third</div>
+                            <div>fourth</div>
+                        </div>
+                        <div data-layout="sz:'split',dir:'v'">
+                            <div  data-layout="sz:'snap',stepx:40,stepy:40">
+                                <div data-layout="nx:4" style="background:orange">this is snap</div>
+                                <div data-layout="nx:1" style="background:orange">1</div>
+                                <div data-layout="nx:2" style="background:orange">2</div>
+                                <div data-layout="ny:2" style="background:orange">3</div>
+                                <div data-layout="nx:1" style="background:orange">4</div>
+                                <div data-layout="nx:1" style="background:orange">5</div>
+                                <div data-layout="nx:1" style="background:orange">6</div>
+                                <div data-layout="nx:1" style="background:orange">7</div>
+                                <div data-layout="nx:1" style="background:orange">8</div>
+                            </div>
+                            <div  data-layout="sz:'smart',stepx:40,stepy:40">
+                                <div data-layout="nx:4" style="background:orange">this is smart</div>
+                                <div data-layout="nx:1" style="background:orange">1</div>
+                                <div data-layout="nx:2" style="background:orange">2</div>
+                                <div data-layout="ny:2" style="background:orange">3</div>
+                                <div data-layout="nx:1" style="background:orange">4</div>
+                                <div data-layout="nx:1" style="background:orange">5</div>
+                                <div data-layout="nx:1" style="background:orange">6</div>
+                                <div data-layout="nx:1" style="background:orange">7</div>
+                                <div data-layout="nx:1" style="background:orange">8</div>
+                                <button data-layout="nx:1">clickme</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-layout="w:200,sz:'box',dir:'v'">
+                    <!--<button data-layout="h:20">add</button>-->
+                    <div data-layout="h:100,sz:'closable'" style="border:1px solid lightgrey;margin:2px;">
+                        <div>close me</div>
+                    </div>
+                    <div id="flap" data-layout="sz:'tabs',dir:'right',p:1" style="border:1px solid lightgrey;margin:2px;">
+                        <div>first</div>
+                        <div>second</div>
+                        <div>third</div>
+                        <div>fourth</div>
+                    </div>
+                </div>
+            </div>
+            <div id="footer" data-layout="sz:'flaps',dir:'top',h:100" style="border:1px solid lightgrey;margin:2px;">
+                <div>first</div>
+                <div data-layout="h:50">second</div>
+                <div data-layout="h:50">third</div>
+                <div data-layout="h:50">fourth</div>
+            </div>
+        </div>
+        <div data-layout="sz:'dialog',x:200,y:300,w:400,h:400,title:'Accordion con vari container fluid'">
+            <div data-layout="sz:'accordion'">
+
+                <div  data-layout="sz:'snap',stepx:40,stepy:40,title:'Prova di SNAP'">
+                    <div data-layout="nx:1" style="background:orange">1</div>
+                    <div data-layout="nx:2" style="background:orange">2</div>
+                    <div data-layout="ny:2" style="background:orange">3</div>
+                    <div  data-layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
+                        <div>first</div>
+                        <div>second</div>
+                        <div>third</div>
+                        <div>fourth</div>
+                    </div>
+                    <div data-layout="nx:1" style="background:orange">4</div>
+                    <div data-layout="nx:1" style="background:orange">5</div>
+                    <div data-layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
+                        <div>first</div>
+                        <div>second</div>
+                        <div>third</div>
+                        <div>fourth</div>
+                    </div>
+                    <div data-layout="nx:1" style="background:orange">6</div>
+                    <div data-layout="nx:1" style="background:orange">7</div>
+                    <div data-layout="nx:1" style="background:orange">8</div>
+                </div>
+                <div data-layout="sz:'sequence',dir:'h',title:'Prova di SEQUENCE'">
                     <div>first</div>
                     <div>second</div>
                     <div>third</div>
                     <div>fourth</div>
                 </div>
-                <div  layout="sz:'smart',stepx:40,stepy:40,title:'Prova di SMART (semplice)'">
-                    <div layout="nx:1" style="background:orange">1</div>
-                    <div layout="nx:2" style="background:orange">2</div>
-                    <div layout="ny:2" style="background:orange">3</div>
-                    <div layout="nx:1" style="background:orange">4</div>
-                    <div layout="nx:1" style="background:orange">5</div>
-                    <div layout="nx:1" style="background:orange">6</div>
-                    <div layout="nx:1" style="background:orange">7</div>
-                    <div layout="nx:1" style="background:orange">8</div>
+                <div  data-layout="sz:'smart',stepx:40,stepy:40,title:'Prova di SMART (semplice)'">
+                    <div data-layout="nx:1" style="background:orange">1</div>
+                    <div data-layout="nx:2" style="background:orange">2</div>
+                    <div data-layout="ny:2" style="background:orange">3</div>
+                    <div data-layout="nx:1" style="background:orange">4</div>
+                    <div data-layout="nx:1" style="background:orange">5</div>
+                    <div data-layout="nx:1" style="background:orange">6</div>
+                    <div data-layout="nx:1" style="background:orange">7</div>
+                    <div data-layout="nx:1" style="background:orange">8</div>
                 </div>
-                <div  layout="sz:'smart',stepx:40,stepy:40,title:'Prova di SMART'">
-                    <div layout="nx:1" style="background:orange">1</div>
-                    <div layout="nx:2" style="background:orange">2</div>
-                    <div layout="ny:2" style="background:orange">3</div>
-                    <div id="accordion" layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
+                <div  data-layout="sz:'smart',stepx:40,stepy:40,title:'Prova di SMART'">
+                    <div data-layout="nx:1" style="background:orange">1</div>
+                    <div data-layout="nx:2" style="background:orange">2</div>
+                    <div data-layout="ny:2" style="background:orange">3</div>
+                    <div  data-layout="nx:3,ny:4,s:100,sz:'accordion'" class="nicepanel">
                         <div>first</div>
                         <div>second</div>
                         <div>third</div>
                         <div>fourth</div>
                     </div>
-                    <div layout="nx:1" style="background:orange">4</div>
-                    <div layout="nx:1" style="background:orange">5</div>
-                    <div layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
+                    <div data-layout="nx:1" style="background:orange">4</div>
+                    <div data-layout="nx:1" style="background:orange">5</div>
+                    <div data-layout="nx:4,ny:4,sz:'sequence',dir:'h'" class="nicepanel">
                         <div>first</div>
-			            <div>second</div>
+                        <div>second</div>
                         <div>third</div>
-			            <div>fourth</div>
+                        <div>fourth</div>
                     </div>
-                    <div layout="nx:1" style="background:orange">6</div>
-                    <div layout="nx:1" style="background:orange">7</div>
-                    <div layout="nx:1" style="background:orange">8</div>
+                    <div data-layout="nx:1" style="background:orange">6</div>
+                    <div data-layout="nx:1" style="background:orange">7</div>
+                    <div data-layout="nx:1" style="background:orange">8</div>
                 </div>
+            </div>
         </div>
-    </div>
-	<div layout="sz:'dialog',x:650,y:100,w:300,h:300,title:'Aggiunta dinamica di closable su SMART'">
-		<div  layout="sz:'smart',stepx:40,stepy:40">
-			<button layout="nx:2" onclick="gen.call(this)">clickme</button>
-		</div>
-		<script>
-				var gen=function()
-				{
-					var n=document.createElement("div");
-					var nx=1+Math.floor(Math.random()*3);
-					var ny=1+Math.floor(Math.random()*3);
-					n.setAttribute("layout","nx:"+nx+",ny:"+ny+",sz:'closable'");
-					var color="rgba("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+",0.5)";
-					jl.setStyle(n,{border: "1px solid grey",margin:"3px",background:color});
-					this.parentNode.appendChild(n);
-					jl(this.parentNode);
-					
-				};
-		</script>
-	</div>
-	<!--<div layout="sz:'backdrop'"></div>-->
-</body>
+        <div data-layout="sz:'dialog',x:650,y:100,w:300,h:300,title:'Aggiunta dinamica di closable su SMART'">
+            <div  data-layout="sz:'smart',stepx:40,stepy:40">
+                <button data-layout="nx:2" onclick="gen.call(this)">clickme</button>
+            </div>
+
+        </div>
+        <!--<div data-layout="sz:'backdrop'"></div>-->
+    </body>
 </html>
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
+
+
+
+
+
