@@ -1,25 +1,25 @@
 //fix indexof
 if (!Array.prototype.indexOf)
 {
-  Array.prototype.indexOf = function(elt /*, from*/)
-  {
-    var len = this.length;
-
-    var from = Number(arguments[1]) || 0;
-    from = (from < 0)
-         ? Math.ceil(from)
-         : Math.floor(from);
-    if (from < 0)
-      from += len;
-
-    for (; from < len; from++)
+    Array.prototype.indexOf = function(elt /*, from*/)
     {
-      if (from in this &&
-          this[from] === elt)
-        return from;
-    }
-    return -1;
-  };
+        var len = this.length;
+
+        var from = Number(arguments[1]) || 0;
+        from = (from < 0)
+                ? Math.ceil(from)
+                : Math.floor(from);
+        if (from < 0)
+            from += len;
+
+        for (; from < len; from++)
+        {
+            if (from in this &&
+                    this[from] === elt)
+                return from;
+        }
+        return -1;
+    };
 }
 //jl core function
 jl = function(e, layout)
@@ -38,8 +38,8 @@ jl = function(e, layout)
         jl.setStyle(e, st);
         jl.fn[ll.sz](e);
     }
-    
-    
+
+
     //children process
     for (var i = 0; i < e.children.length; i++)
     {
@@ -56,17 +56,17 @@ jl.boot = function()
     };
 };
 //if <0 set to 0
-jl.clip=function(x)
+jl.clip = function(x)
 {
-	return x>=0?x:0;
+    return x >= 0 ? x : 0;
 };
 //set the text
-jl.setText=function(e,txt)
+jl.setText = function(e, txt)
 {
-	if (e.textContent!==undefined)
-		e.textContent=txt;
-	else
-		e.innerText=txt;
+    if (e.textContent !== undefined)
+        e.textContent = txt;
+    else
+        e.innerText = txt;
 }
 //create a new element with defined attributes
 jl.create = function(tag, attr) {
@@ -78,14 +78,14 @@ jl.create = function(tag, attr) {
 //standard MAP function : return list with the result of f() called on each element of s
 jl.map = function(f, s) {
     r = [];
-    for (var i=0;i<s.length;i++)
+    for (var i = 0; i < s.length; i++)
         r.push(f(s[i]));
     return r;
 };
 //read and parse layout attribute as an object
 jl.readLayout = function(e) {
     try {
-        return eval("[{" + (e.getAttribute("data-layout") || e.getAttribute("layout")||"") + "}]")[0];
+        return eval("[{" + (e.getAttribute("data-layout") || e.getAttribute("layout") || "") + "}]")[0];
     } catch (ex) {
         return {};
     }
@@ -103,19 +103,19 @@ jl.setLayout = function(e, ll) {
 };
 //read the current css styles
 jl.getStyle = function(e) {
-	if (e)
-		return e.currentStyle || window.getComputedStyle(e);
+    if (e)
+        return e.currentStyle || window.getComputedStyle(e);
 };
 //set the attributes in the object style to the element style, preexisting attributes not in "style" will stay untouched
 jl.setStyle = function(e, style) {
     for (var s in style)
-	try
-	{
-        e.style[s] = style[s];
-		}
-	catch(ex){
-		console.log(ex);
-	}
+        try
+        {
+            e.style[s] = style[s];
+        }
+        catch (ex) {
+            console.log(ex);
+        }
 };
 //set style in order to fit the parent
 jl.setFillParent = function(e) {
@@ -123,21 +123,23 @@ jl.setFillParent = function(e) {
 };
 //test if element has class cls
 jl.hasClass = function(e, cls) {
-    var cl = (e.className||"").split(' ');
-    return (cl.indexOf(cls)>=0);
+    var cl = (e.className || "").split(' ');
+    return (cl.indexOf(cls) >= 0);
 };
-jl.toggleClass=function(e,cls,b)
+jl.toggleClass = function(e, cls, b)
 {
-    var cl2=(cls||"").split(' ');
-    if (cl2.length!==1)
-        return jl.map(function(c){jl.toggleClass(e,c,b);},cl2);
-    var cl = (e.className||"").split(' ');
-    var hc=jl.hasClass(e,cls);
+    var cl2 = (cls || "").split(' ');
+    if (cl2.length !== 1)
+        return jl.map(function(c) {
+            jl.toggleClass(e, c, b);
+        }, cl2);
+    var cl = (e.className || "").split(' ');
+    var hc = jl.hasClass(e, cls);
     var i;
     if (!hc && b)
         cl.push(cls);
     if (hc && !b)
-        while ((i=cl.indexOf(cls))>=0)
+        while ((i = cl.indexOf(cls)) >= 0)
             cl.splice(i);
     e.className = cl.join(' ');
 };
@@ -212,14 +214,14 @@ jl.getSizes = function(e)
 //set the size in pixels
 jl.setSizes = function(e, r)
 {
-    ns={};
+    ns = {};
     var ss = ["width", "height", "borderLeft", "borderRight", "borderTop", "borderBottom", "paddingLeft", "paddingRight", "paddingTop", "paddingBottom", "marginLeft", "marginRight", "marginTop", "marginBottom"];
-    for (var i=0;i<ss.length;i++)
-        if (r[ss[i]]!==undefined)
-            ns[ss[i]]=r[ss[i]]+"px";
+    for (var i = 0; i < ss.length; i++)
+        if (r[ss[i]] !== undefined)
+            ns[ss[i]] = r[ss[i]] + "px";
     if (r["position"])
-        ns["position"]=r["position"];
-    jl.setStyle(e,ns);
+        ns["position"] = r["position"];
+    jl.setStyle(e, ns);
 };
 
 
@@ -234,16 +236,18 @@ jl.fn = {};
 //fullpage : all children fill page
 jl.fn.fullpage = function(e) {
     jl.setStyle(e, {position: "fixed", top: "0px", bottom: "0px", left: "0px", right: "0px"});
-    var cc=jl.children(e);
+    var cc = jl.children(e);
     for (var i = 0; i < cc.length; i++)
         jl.setStyle(cc[i], {position: "absolute", top: "0px", bottom: "0px", left: "0px", right: "0px"});
     if (!e._jlcfg)
     {
         e._jlcfg = {};
         /*window.addEventListener("resize", function() {
+         jl(e);
+         });*/
+        jl.bindEvent(window, "resize", function() {
             jl(e);
-        });*/
-        jl.bindEvent(window,"resize",function() {jl(e);});
+        });
     }
 };
 //fullpage : all children fill page
@@ -260,8 +264,8 @@ jl.fn.dialog = function(e) {
         e._jlcfg = {};
         e._jlcfg.header = jl.create("div");
         e.appendChild(e._jlcfg.header);
-        jl.toggleClass(e._jlcfg.header, "dialogheader jlexclude",true);
-        jl.setText(e._jlcfg.header,ll.title || "dialog");
+        jl.toggleClass(e._jlcfg.header, "dialogheader jlexclude", true);
+        jl.setText(e._jlcfg.header, ll.title || "dialog");
         jl.setStyle(e._jlcfg.header, {position: "absolute", top: "0px", left: "0px", right: "0px"});
         var cc = jl.children(e);
         var testb = function(evt) {
@@ -281,11 +285,11 @@ jl.fn.dialog = function(e) {
                 continue;
             jl.setStyle(c, {position: "absolute", top: e._jlcfg.header.offsetHeight + "px", bottom: "0px", left: "0px", right: "0px", overflow: "auto"});
         }
-        jl.bindEvent(e._jlcfg.header,"mousedown", function(evt) {
+        jl.bindEvent(e._jlcfg.header, "mousedown", function(evt) {
             var d = {left: evt.pageX - ll.x, top: evt.pageY - ll.y};
             var mouseup = function(evt) {
-                jl.unbindEvent(document,"mouseup", mouseup);
-                jl.unbindEvent(document,"mousemove", mousemove);
+                jl.unbindEvent(document, "mouseup", mouseup);
+                jl.unbindEvent(document, "mousemove", mousemove);
             };
             var mousemove = function(evt) {
                 ll.x = evt.pageX - d.left;
@@ -294,11 +298,11 @@ jl.fn.dialog = function(e) {
                 jl(e);
                 jl.preventEvent(evt);
             };
-            jl.bindEvent(document,"mouseup", mouseup);
-            jl.bindEvent(document,"mousemove", mousemove);
+            jl.bindEvent(document, "mouseup", mouseup);
+            jl.bindEvent(document, "mousemove", mousemove);
         });
         //handle resize
-        jl.bindEvent(e,"mousemove", function(evt) {
+        jl.bindEvent(e, "mousemove", function(evt) {
             var cur = {
                 0: "default",
                 1: "ew-resize", 2: "ew-resize", 4: "ns-resize", 8: "ns-resize",
@@ -307,13 +311,13 @@ jl.fn.dialog = function(e) {
             jl.setStyle(e, {cursor: cur});
         });
         //start drag
-        jl.bindEvent(e,"mousedown", function(evt) {
+        jl.bindEvent(e, "mousedown", function(evt) {
             var d = {t: testb(evt), x: evt.pageX - ll.x, y: evt.pageY - ll.y, w: evt.pageX - ll.w, h: evt.pageY - ll.h};
             if (!d.t)
                 return;
             var mouseup = function(evt) {
-                jl.unbindEvent(document,"mouseup", mouseup);
-                jl.unbindEvent(document,"mousemove", mousemove);
+                jl.unbindEvent(document, "mouseup", mouseup);
+                jl.unbindEvent(document, "mousemove", mousemove);
             };
             var mousemove = function(evt) {
                 if (d.t & 1)
@@ -339,8 +343,8 @@ jl.fn.dialog = function(e) {
                 jl.preventEvent(evt);
                 jl.stopEvent(evt);
             };
-            jl.bindEvent(document,"mouseup", mouseup);
-            jl.bindEvent(document,"mousemove", mousemove);
+            jl.bindEvent(document, "mouseup", mouseup);
+            jl.bindEvent(document, "mousemove", mousemove);
             jl.preventEvent(evt);
             jl.stopEvent(evt);
         });
@@ -355,7 +359,7 @@ jl.fn.fitme = function(e) {
 //box : all children handled by weight p and minimum size s
 jl.fn.box = function(e) {
     var ll = jl.getLayout(e);
-	var sss=jl.getSizes(e);
+    var sss = jl.getSizes(e);
     ll.dir = ll.dir === 'v' ? 'v' : 'h';
     var ts = jl.getSizes(e)[{'h': "width", 'v': "height"}[ll.dir]];
     var tp = 0;
@@ -376,8 +380,8 @@ jl.fn.box = function(e) {
         var s = cll.s;
         if (tp)
         {
-            var ds=ts * cll.p / tp;
-            s += ds>=0?ds:0;
+            var ds = ts * cll.p / tp;
+            s += ds >= 0 ? ds : 0;
         }
         if (ll.dir === "h")
             jl.setStyle(cc[i], {position: "absolute", top: "0px", bottom: "0px", left: offset + "px", width: jl.clip(s - cs.deltaWidth) + "px"});
@@ -389,7 +393,7 @@ jl.fn.box = function(e) {
 //split : 2 children, one constant, other dynamic
 jl.fn.split = function(e) {
     var ll = jl.getLayout(e);
-    var cc=jl.children(e);
+    var cc = jl.children(e);
     var c0 = cc[0];
     var c1 = cc[1];
     var s = jl.getSizes(e);
@@ -405,7 +409,7 @@ jl.fn.split = function(e) {
         e._jlcfg.bar = bar;
         e.appendChild(bar);
         //drag
-        jl.bindEvent(bar,"mousedown", function(evt) {
+        jl.bindEvent(bar, "mousedown", function(evt) {
             var delta = {'h': evt.pageX, 'v': evt.pageY}[ll.dir] - ll.splitpos;
             var mousemove = function(evt) {
                 ll.splitpos = {'h': evt.pageX, 'v': evt.pageY}[ll.dir] - delta;
@@ -414,11 +418,11 @@ jl.fn.split = function(e) {
                 jl.preventEvent(evt);
             };
             var mouseup = function(evt) {
-                jl.unbindEvent(document,"mouseup", mouseup);
-                jl.unbindEvent(document,"mousemove", mousemove);
+                jl.unbindEvent(document, "mouseup", mouseup);
+                jl.unbindEvent(document, "mousemove", mousemove);
             };
-            jl.bindEvent(document,"mousemove", mousemove);
-            jl.bindEvent(document,"mouseup", mouseup);
+            jl.bindEvent(document, "mousemove", mousemove);
+            jl.bindEvent(document, "mouseup", mouseup);
         });
         jl.setStyle(bar, {background: "rgb(154, 161, 165)", "z-index": 1});
     }
@@ -453,7 +457,7 @@ jl.fn.tabs = function(e) {
         var header = jl.create("div");
         e._jlcfg.header = header;
         e.appendChild(e._jlcfg.header);
-        jl.toggleClass(e._jlcfg.header, "jlexclude tabheader",true);
+        jl.toggleClass(e._jlcfg.header, "jlexclude tabheader", true);
         var hstyle = {"top": "0px", "left": "0px", "bottom": "0px", "right": "0px", "position": "absolute"};
         delete hstyle[{"top": "bottom", "left": "right", "bottom": "top", "right": "left"}[ll.dir]];
         jl.setStyle(header, hstyle);
@@ -463,11 +467,11 @@ jl.fn.tabs = function(e) {
             var cll = jl.getLayout(c);
             var flap = jl.create("div");
             e._jlcfg.flaps.push(flap);
-            jl.setText(flap,cll.title || "tab " + i);
+            jl.setText(flap, cll.title || "tab " + i);
             header.appendChild(flap);
             if (ll.dir === "top" || ll.dir === "bottom")
                 jl.setStyle(flap, {display: "inline-block"});
-            jl.bindEvent(flap,"click", (function(i) {
+            jl.bindEvent(flap, "click", (function(i) {
                 return function() {
                     ll.sel = i;
                     jl.setLayout(e, ll);
@@ -487,7 +491,7 @@ jl.fn.tabs = function(e) {
         cstyle.display = issel ? "block" : "none";
         jl.setStyle(c, cstyle);
         var flap = e._jlcfg.flaps[i];
-        jl.toggleClass(flap,"selected",issel);
+        jl.toggleClass(flap, "selected", issel);
     }
 
 };
@@ -503,7 +507,7 @@ jl.fn.flaps = function(e) {
         var header = jl.create("div");
         e._jlcfg.header = header;
         e.appendChild(e._jlcfg.header);
-        jl.toggleClass(e._jlcfg.header, "jlexclude tabheader",true);
+        jl.toggleClass(e._jlcfg.header, "jlexclude tabheader", true);
         var hstyle = {"top": "0px", "left": "0px", "bottom": "0px", "right": "0px", "position": "absolute"};
         delete hstyle[{"top": "bottom", "left": "right", "bottom": "top", "right": "left"}[ll.dir]];
         jl.setStyle(header, hstyle);
@@ -517,7 +521,7 @@ jl.fn.flaps = function(e) {
             header.appendChild(flap);
             if (ll.dir === "top" || ll.dir === "bottom")
                 jl.setStyle(flap, {display: "inline-block"});
-            jl.bindEvent(flap,"click", (function(i) {
+            jl.bindEvent(flap, "click", (function(i) {
                 return function() {
                     ll.sel = (ll.sel === i) ? null : i;
                     jl.setLayout(e, ll);
@@ -551,7 +555,7 @@ jl.fn.flaps = function(e) {
             esize += cl[{"top": 'h', "left": 'w', "bottom": 'h', "right": 'w'}[ll.dir]] || 0;
         ll[{"top": 'h', "left": 'w', "bottom": 'h', "right": 'w'}[ll.dir]] = esize;
         var flap = e._jlcfg.flaps[i];
-        jl.toggleClass(flap, "selected",issel);
+        jl.toggleClass(flap, "selected", issel);
     }
 };
 //sequence : set sequence of tabs
@@ -562,27 +566,27 @@ jl.fn.sequence = function(e) {
     {
         e._jlcfg = {};
         e._jlcfg.prev = jl.create("span");
-        jl.setText(e._jlcfg.prev,"<");
-        jl.toggleClass(e._jlcfg.prev, "jlexclude",true);
+        jl.setText(e._jlcfg.prev, "<");
+        jl.toggleClass(e._jlcfg.prev, "jlexclude jlbutton", true);
         e.appendChild(e._jlcfg.prev);
-        jl.bindEvent(e._jlcfg.prev,"click", function() {
+        jl.bindEvent(e._jlcfg.prev, "click", function() {
             var n = jl.children(e).length;
             ll.sel = (ll.sel + n - 1) % n;
             jl.setLayout(e, ll);
             jl(e);
         });
         e._jlcfg.next = jl.create("span");
-        jl.setText(e._jlcfg.next,">");
-        jl.toggleClass(e._jlcfg.next, "jlexclude",true);
+        jl.setText(e._jlcfg.next, ">");
+        jl.toggleClass(e._jlcfg.next, "jlexclude jlbutton", true);
         e.appendChild(e._jlcfg.next);
-        jl.bindEvent(e._jlcfg.next,"click", function() {
+        jl.bindEvent(e._jlcfg.next, "click", function() {
             var n = jl.children(e).length;
             ll.sel = (ll.sel + n + 1) % n;
             jl.setLayout(e, ll);
             jl(e);
         });
-        jl.toggleClass(e._jlcfg.prev, "jlbutton",true);
-        jl.toggleClass(e._jlcfg.next, "jlbutton",true);
+//        jl.toggleClass(e._jlcfg.prev, "jlbutton", true);
+//        jl.toggleClass(e._jlcfg.next, "jlbutton", true);
     }
     var cc = jl.children(e);
     for (var i = 0; i < cc.length; i++)
@@ -595,6 +599,49 @@ jl.fn.sequence = function(e) {
         jl.setStyle(e._jlcfg.next, {position: "absolute", top: cmdtop + "px", right: "3px"});
     }
 };
+
+//crumb : set sequence of tabs
+jl.fn.crumb = function(e) {
+    var ll = jl.getLayout(e);
+    ll.sel = ll.sel || 0;
+    if (!e._jlcfg)
+    {
+        e._jlcfg = {};
+        e._jlcfg.flaps = [];
+        e._jlcfg.header = jl.create("div");
+        jl.toggleClass(e._jlcfg.header, "jlexclude", true);
+        e.appendChild(e._jlcfg.header);
+        var cc = jl.children(e);
+        for (var i = 0; i < cc.length; i++)
+        {
+            var flap = jl.create("div");
+            e._jlcfg.flaps.push(flap);
+            jl.toggleClass(flap, "jlaccordionflap", true);
+            jl.setStyle(flap,{display: "inline-block",width: "10px",height: "10px",margin: "5px","border-radius": "5px"});
+            e._jlcfg.header.appendChild(flap);
+            jl.bindEvent(flap, "click", (function(i) {
+                return function() {
+                    ll.sel = i;
+                    jl.setLayout(e, ll);
+                    jl(e);
+                };
+            })(i));
+        }
+    }
+    var cc = jl.children(e);
+    for (var i = 0; i < cc.length; i++)
+    {
+        var c = cc[i];
+        var issel = (i === ll.sel);
+        jl.setStyle(c, {"display": (ll.sel === i ? "block" : "none")});
+        jl.setStyle(c, {position: "absolute", top: "0px", bottom: "0px", left: "0px", right: "0px"});
+        var flap = e._jlcfg.flaps[i];
+        jl.toggleClass(flap, "selected", issel);
+    }
+    var cmdtop = (e.offsetWidth - e._jlcfg.header.offsetWidth) / 2;
+    jl.setStyle(e._jlcfg.header, {display: "inline-block",position: "absolute", bottom: 0 + "px",left: cmdtop + "px"});
+};
+
 //accordion : set children in an accordion
 jl.fn.accordion = function(e)
 {
@@ -611,10 +658,10 @@ jl.fn.accordion = function(e)
             var cll = jl.getLayout(c);
             var flap = jl.create("div");
             e._jlcfg.flaps.push(flap);
-            jl.setText(flap,cll.title || "section " + i);
+            jl.setText(flap, cll.title || "section " + i);
             e.insertBefore(flap, c);
-            jl.toggleClass(flap, "jlaccordionflap jlexclude",true);
-            jl.bindEvent(flap,"click", (function(i) {
+            jl.toggleClass(flap, "jlaccordionflap jlexclude", true);
+            jl.bindEvent(flap, "click", (function(i) {
                 return function() {
                     ll.sel = i;
                     jl.setLayout(e, ll);
@@ -642,7 +689,7 @@ jl.fn.accordion = function(e)
         s.display = (issel ? "block" : "none");
         jl.setStyle(c, s);
         offs += (issel ? h : 0);
-        jl.toggleClass(f, "selected",issel);
+        jl.toggleClass(f, "selected", issel);
     }
 };
 //snap : grid based fluid layout, at the end of the line it starts a new line of children computing the max space taken by the first
@@ -650,7 +697,7 @@ jl.fn.snap = function(e)
 {
     var ll = jl.getLayout(e);
     var s = jl.getSizes(e);
-    var cc=jl.children(e);
+    var cc = jl.children(e);
     ll.stepx = parseInt(ll.stepx) || 24;
     ll.marginx = parseInt(ll.marginx) || 4;
     ll.stepy = parseInt(ll.stepy) || 24;
@@ -686,7 +733,7 @@ jl.fn.smart = function(e)
 {
     var ll = jl.getLayout(e);
     var s = jl.getSizes(e);
-    var cc=jl.children(e);
+    var cc = jl.children(e);
     ll.stepx = parseInt(ll.stepx) || 24;
     ll.marginx = parseInt(ll.marginx) || 4;
     ll.stepy = parseInt(ll.stepy) || 24;
@@ -737,10 +784,10 @@ jl.fn.closable = function(e)
         e._jlcfg.flaps = [];
         e._jlcfg.cc = jl.children(e);
         var btn = jl.create("div");
-        jl.setText(btn,"×");
+        jl.setText(btn, "×");
         e.appendChild(btn);
         jl.setStyle(btn, {position: "absolute", top: "0px", right: "0px", padding: "3px", width: "15px", height: "15px", "text-align": "center", "vertical-align": "middle", cursor: "pointer"});
-        jl.bindEvent(btn,"click", function() {
+        jl.bindEvent(btn, "click", function() {
             e.parentNode.removeChild(e);
             jl(e.parentNode);
         });
@@ -757,7 +804,7 @@ jl.fn.backdrop = function(e)
         e._jlcfg.cc = jl.children(e);
         var es = {position: "fixed", top: "0px", bottom: "0px", left: "0px", right: "0px", "background-color": "rgba(10, 10, 10, 0.8)", "z-index": 90};
         jl.setStyle(e, es);
-        jl.bindEvent(e,"click", function() {
+        jl.bindEvent(e, "click", function() {
             e.parentNode.removeChild(e);
             jl(e.parentNode);
         });

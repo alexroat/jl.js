@@ -10,7 +10,6 @@ and open the template in the editor.
 
 
 .jlexclude{
-    background:rgb(237, 239, 241);
     overflow: hidden;
     white-space: nowrap;
     -webkit-touch-callout: none;
@@ -33,6 +32,7 @@ button[layout],button[data-layout] {
 
 .jlbutton
 {
+    background:rgb(237, 239, 241);
     cursor:default;
     padding: 10px;
     border: 1px solid darkgray;
@@ -50,12 +50,17 @@ button[layout],button[data-layout] {
     font-size: larger;
 }
 
+
 .jlaccordionflap
 {
+    background:rgb(237, 239, 241);
     border: 1px solid darkgray;
 }
 
-
+.tabheader
+{
+    background:rgb(237, 239, 241);
+}
 
 .tabheader > div
 {
