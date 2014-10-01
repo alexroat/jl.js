@@ -810,6 +810,35 @@ jl.fn.backdrop = function(e)
             jl(e.parentNode);
         });
     }
-
 };
+//tree: div containing a tree
+jl.fn.tree = function(e)
+{
 
+    var ll = jl.getLayout(e);
+    if (!e._jlcfg)
+    {
+        e._jlcfg = {};
+		var nodes=e.querySelectorAll("ul>li");
+		for (var i=0;i<nodes.length;i++)
+		{
+			var n=nodes[i];
+			var nt=jl.create("span");
+			//jl.setText(nt,"+");
+			jl.setStyle(nt,{cursor: "pointer"});
+			n.insertBefore(nt, n.firstChild);
+			
+			jl.bindEvent(nt,"click",(function(x){ return function(){
+				var isclosed=jl.hasClass(x,"closed");
+				var ctx=x.querySelector("ul");
+				console.log(ctx);
+				jl.toggleClass(x,"closed",!isclosed);
+				if (ctx)
+					jl.setStyle(ctx,{display:(isclosed?"block":"none")});
+			}})(n));
+		}
+		
+		
+    }
+	jl.setStyle(e,{overflow: "auto"});
+};
