@@ -610,6 +610,7 @@ jl.fn.crumb = function(e) {
         e._jlcfg.flaps = [];
         e._jlcfg.header = jl.create("div");
         jl.toggleClass(e._jlcfg.header, "jlexclude", true);
+        jl.setStyle(e._jlcfg.header, {display: "inline-block",position: "absolute", bottom: 0 + "px"});
         e.appendChild(e._jlcfg.header);
         var cc = jl.children(e);
         for (var i = 0; i < cc.length; i++)
