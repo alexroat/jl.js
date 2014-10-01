@@ -145,22 +145,32 @@ jl.toggleClass = function(e, cls, b)
 };
 //bind event
 jl.bindEvent = function(el, ev, fn) {
-    if (el.addEventListener) { // modern browsers including IE9+
-        el.addEventListener(ev, fn, false);
-    } else if (window.attachEvent) { // IE8 and below
-        el.attachEvent('on' + ev, fn);
-    } else {
-        el['on' + ev] = fn;
+    var evl = ev.split(' ');
+    for (var i = 0; i < evl.length; i++)
+    {
+        ev = evl[i];
+        if (el.addEventListener) { // modern browsers including IE9+
+            el.addEventListener(ev, fn, false);
+        } else if (window.attachEvent) { // IE8 and below
+            el.attachEvent('on' + ev, fn);
+        } else {
+            el['on' + ev] = fn;
+        }
     }
 };
 //unbind event
 jl.unbindEvent = function(el, ev, fn) {
-    if (el.removeEventListener) {
-        el.removeEventListener(ev, fn, false);
-    } else if (window.detachEvent) {
-        el.detachEvent('on' + ev, fn);
-    } else {
-        elem['on' + ev] = null;
+    var evl = ev.split(' ');
+    for (var i = 0; i < evl.length; i++)
+    {
+        ev = evl[i];
+        if (el.removeEventListener) {
+            el.removeEventListener(ev, fn, false);
+        } else if (window.detachEvent) {
+            el.detachEvent('on' + ev, fn);
+        } else {
+            elem['on' + ev] = null;
+        }
     }
 };
 //stop event propagation
@@ -610,7 +620,7 @@ jl.fn.crumb = function(e) {
         e._jlcfg.flaps = [];
         e._jlcfg.header = jl.create("div");
         jl.toggleClass(e._jlcfg.header, "jlexclude", true);
-        jl.setStyle(e._jlcfg.header, {display: "inline-block",position: "absolute", bottom: 0 + "px"});
+        jl.setStyle(e._jlcfg.header, {display: "inline-block", position: "absolute", bottom: 0 + "px"});
         e.appendChild(e._jlcfg.header);
         var cc = jl.children(e);
         for (var i = 0; i < cc.length; i++)
@@ -618,7 +628,7 @@ jl.fn.crumb = function(e) {
             var flap = jl.create("div");
             e._jlcfg.flaps.push(flap);
             jl.toggleClass(flap, "jlaccordionflap", true);
-            jl.setStyle(flap,{display: "inline-block",width: "10px",height: "10px",margin: "5px","border-radius": "5px"});
+            jl.setStyle(flap, {display: "inline-block", width: "10px", height: "10px", margin: "5px", "border-radius": "5px"});
             e._jlcfg.header.appendChild(flap);
             jl.bindEvent(flap, "click", (function(i) {
                 return function() {
@@ -640,7 +650,7 @@ jl.fn.crumb = function(e) {
         jl.toggleClass(flap, "selected", issel);
     }
     var cmdtop = (e.offsetWidth - e._jlcfg.header.offsetWidth) / 2;
-    jl.setStyle(e._jlcfg.header, {display: "inline-block",position: "absolute", bottom: 0 + "px",left: cmdtop + "px"});
+    jl.setStyle(e._jlcfg.header, {display: "inline-block", position: "absolute", bottom: 0 + "px", left: cmdtop + "px"});
 };
 
 //accordion : set children in an accordion
@@ -819,26 +829,28 @@ jl.fn.tree = function(e)
     if (!e._jlcfg)
     {
         e._jlcfg = {};
-		var nodes=e.querySelectorAll("ul>li");
-		for (var i=0;i<nodes.length;i++)
-		{
-			var n=nodes[i];
-			var nt=jl.create("span");
-			//jl.setText(nt,"+");
-			jl.setStyle(nt,{cursor: "pointer"});
-			n.insertBefore(nt, n.firstChild);
-			
-			jl.bindEvent(nt,"click",(function(x){ return function(){
-				var isclosed=jl.hasClass(x,"closed");
-				var ctx=x.querySelector("ul");
-				console.log(ctx);
-				jl.toggleClass(x,"closed",!isclosed);
-				if (ctx)
-					jl.setStyle(ctx,{display:(isclosed?"block":"none")});
-			}})(n));
-		}
-		
-		
+        var nodes = e.querySelectorAll("ul>li");
+        for (var i = 0; i < nodes.length; i++)
+        {
+            var n = nodes[i];
+            var nt = jl.create("span");
+            //jl.setText(nt,"+");
+            jl.setStyle(nt, {cursor: "pointer"});
+            n.insertBefore(nt, n.firstChild);
+
+            jl.bindEvent(nt, "click", (function(x) {
+                return function() {
+                    var isclosed = jl.hasClass(x, "closed");
+                    var ctx = x.querySelector("ul");
+                    console.log(ctx);
+                    jl.toggleClass(x, "closed", !isclosed);
+                    if (ctx)
+                        jl.setStyle(ctx, {display: (isclosed ? "block" : "none")});
+                }
+            })(n));
+        }
+
+
     }
-	jl.setStyle(e,{overflow: "auto"});
+    jl.setStyle(e, {overflow: "auto"});
 };
