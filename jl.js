@@ -34,17 +34,17 @@ jl = function(e, layout)
     var ll = jl.getLayout(e);
     if (jl.fn[ll.sz])
     {
-        var st = {"overflow": "hidden"};
-        jl.setStyle(e, st);
+        jl.setStyle(e, {"overflow": "auto"});
         jl.fn[ll.sz](e);
     }
-
+    
 
     //children process
-    for (var i = 0; i < e.children.length; i++)
+    var cc=jl.children(e);
+    for (var i = 0; i < cc.length; i++)
     {
-        if (jl.getStyle(e.children[i]).display !== "none")
-            jl(e.children[i]);
+        if (jl.getStyle(cc[i]).display !== "none")
+            jl(cc[i]);
     }
 };
 //schedule boot of jl
@@ -440,16 +440,16 @@ jl.fn.split = function(e) {
     {
         var c0w = ll.splitpos - c0s.deltaWidth;
         var c1w = s.width - ll.splitpos - ll.splitsize - c1s.deltaWidth;
-        jl.setStyle(c0, {position: "absolute", top: "0px", bottom: "0px", left: "0px", width: jl.clip(c0w) + "px", overflow: "hidden", display: (c0w < 0 ? "none" : "block")});
-        jl.setStyle(c1, {position: "absolute", top: "0px", bottom: "0px", right: "0px", width: jl.clip(c1w) + "px", overflow: "hidden", display: (c1w < 0 ? "none" : "block")});
+        jl.setStyle(c0, {overflow:"auto",position: "absolute", top: "0px", bottom: "0px", left: "0px", width: jl.clip(c0w) + "px",  display: (c0w < 0 ? "none" : "block")});
+        jl.setStyle(c1, {overflow:"auto",position: "absolute", top: "0px", bottom: "0px", right: "0px", width: jl.clip(c1w) + "px", display: (c1w < 0 ? "none" : "block")});
         jl.setStyle(e._jlcfg.bar, {position: "absolute", top: "0px", bottom: "0px", width: jl.clip(ll.splitsize) + "px", left: ll.splitpos + "px", cursor: "ew-resize"});
     }
     else
     {
         var c0h = ll.splitpos - c0s.deltaHeight;
         var c1h = s.height - ll.splitpos - ll.splitsize - c1s.deltaHeight;
-        jl.setStyle(c0, {position: "absolute", top: "0px", left: "0px", right: "0px", height: jl.clip(c0h) + "px", overflow: "hidden", display: (c0h < 0 ? "none" : "block")});
-        jl.setStyle(c1, {position: "absolute", bottom: "0px", left: "0px", right: "0px", height: jl.clip(c1h) + "px", overflow: "hidden", display: (c1h < 0 ? "none" : "block")});
+        jl.setStyle(c0, {overflow:"auto",position: "absolute", top: "0px", left: "0px", right: "0px", height: jl.clip(c0h) + "px", display: (c0h < 0 ? "none" : "block")});
+        jl.setStyle(c1, {overflow:"auto",position: "absolute", bottom: "0px", left: "0px", right: "0px", height: jl.clip(c1h) + "px", display: (c1h < 0 ? "none" : "block")});
         jl.setStyle(e._jlcfg.bar, {position: "absolute", left: "0px", right: "0px", height: jl.clip(ll.splitsize) + "px", top: ll.splitpos + "px", cursor: "ns-resize"});
     }
 
@@ -692,10 +692,10 @@ jl.fn.accordion = function(e)
         var f = e._jlcfg.flaps[i];
         var issel = (i === ll.sel);
         //flap positioning
-        jl.setStyle(f, {position: "absolute", top: offs + "px", left: "0px", right: "0px", overflow: "hidden", cursor: "pointer"});
+        jl.setStyle(f, {position: "absolute", top: offs + "px", left: "0px", right: "0px", cursor: "pointer"});
         offs += jl.getSizes(f).totHeight;
         //child positioning
-        var s = {position: "absolute", top: offs + "px", left: "0px", right: "0px", overflow: "hidden"};
+        var s = {position: "absolute", top: offs + "px", left: "0px", right: "0px"};
         s.height = jl.clip(issel ? (h - jl.getSizes(c).deltaHeight) : 0) + "px";
         s.display = (issel ? "block" : "none");
         jl.setStyle(c, s);
@@ -733,7 +733,7 @@ jl.fn.snap = function(e)
             oy += maxny;
             maxny = cll.ny;
         }
-        jl.setStyle(c, {position: "absolute", left: (ox * dw + ll.marginx) + "px", top: (oy * dh + ll.marginy) + "px", width: jl.clip(cll.nx * dw - 2 * ll.marginx - cs.deltaWidth) + "px", height: jl.clip(cll.ny * dh - 2 * ll.marginy - cs.deltaHeight) + "px", overflow: "hidden"});
+        jl.setStyle(c, {position: "absolute", left: (ox * dw + ll.marginx) + "px", top: (oy * dh + ll.marginy) + "px", width: jl.clip(cll.nx * dw - 2 * ll.marginx - cs.deltaWidth) + "px", height: jl.clip(cll.ny * dh - 2 * ll.marginy - cs.deltaHeight) + "px"});
         maxny = cll.ny > maxny ? cll.ny : maxny;
         ox = nox;
     }
@@ -778,7 +778,7 @@ jl.fn.smart = function(e)
                             map[((ix + tx) + "," + (iy + ty))] = 1;
                     go = false;
 
-                    jl.setStyle(c, {position: "absolute", left: (ix * dw + ll.marginx) + "px", top: (iy * dh + ll.marginy) + "px", width: jl.clip(cll.nx * dw - 2 * ll.marginx - cs.deltaWidth) + "px", height: jl.clip(cll.ny * dh - 2 * ll.marginy - cs.deltaHeight) + "px", overflow: "hidden"});
+                    jl.setStyle(c, {position: "absolute", left: (ix * dw + ll.marginx) + "px", top: (iy * dh + ll.marginy) + "px", width: jl.clip(cll.nx * dw - 2 * ll.marginx - cs.deltaWidth) + "px", height: jl.clip(cll.ny * dh - 2 * ll.marginy - cs.deltaHeight) + "px"});
 
 
                 }
