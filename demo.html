@@ -176,19 +176,23 @@
                     <div data-layout="nx:1" style="background:orange">8</div>
                 </div>
                 <div  data-layout="sz:'crumb',title:'Prova di Crumb'" class="nicepanel">
-                        <div>first</div>
-                        <div>second</div>
-                        <div>third</div>
-                        <div>fourth</div>
-                    </div>
-            </div>
-            
-        </div>
-        <div data-layout="sz:'dialog',x:650,y:100,w:300,h:300,title:'Aggiunta dinamica di closable su SMART'">
-            <div  data-layout="sz:'smart',stepx:40,stepy:40">
-                <button data-layout="nx:2" onclick="gen.call(this)">clickme</button>
+                    <div>first</div>
+                    <div>second</div>
+                    <div>third</div>
+                    <div>fourth</div>
+                </div>
             </div>
 
+        </div>
+        <div data-layout="sz:'dialog',x:650,y:100,w:300,h:300,title:'Aggiunta dinamica di closable su SMART'">
+            <div  data-layout="sz:'crumb'">
+                <div  data-layout="sz:'smart',stepx:40,stepy:40">
+                    <button data-layout="nx:2" onclick="gen.call(this)">clickme</button>
+                </div>
+                <div  data-layout="sz:'smart',stepx:40,stepy:40">
+                    <button data-layout="nx:2" onclick="gen.call(this)">clickme</button>
+                </div>
+            </div>
         </div>
         <!--<div data-layout="sz:'backdrop'"></div>-->
     </body>
