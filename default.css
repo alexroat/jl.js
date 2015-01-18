@@ -9,6 +9,13 @@ and open the template in the editor.
 */
 
 
+/*patch per githubpages*/
+.extLives
+{
+	display:none;
+}
+
+
 .jlexclude{
     overflow: hidden;
     white-space: nowrap;
