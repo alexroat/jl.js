@@ -9,18 +9,31 @@
         </script>
 
         <script>
-            var gen = function()
+            var gen = function ()
             {
                 var n = document.createElement("div");
                 var nx = 1 + Math.floor(Math.random() * 3);
                 var ny = 1 + Math.floor(Math.random() * 3);
-                n.setAttribute("layout", "nx:" + nx + ",ny:" + ny + ",sz:'closable'");
+                n.setAttribute("layout", jl.toLayout({nx: nx, ny: ny, sz: 'closable'}));
                 var color = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",0.5)";
                 jl.setStyle(n, {border: "1px solid grey", margin: "3px", background: color});
                 this.parentNode.appendChild(n);
                 jl(this.parentNode);
-
             };
+            var createSimpleDialog = function ()
+            {
+                var d = {tag: "div", attr: {layout: jl.toLayout({sz: 'dialog', x: 200, y: 300, w: 400, h: 400, title: 'DIALOG'}), id: "mydialog"}};
+                d.children=[{children:["ciao",{},"miao","bau"]}];
+                //var body = document.getElementsByTagName('body');
+                d=jl.build(d);
+                document.body.appendChild(d);
+                jl(d);
+                //console.log(d);
+            }
+            var createComplexDialog = function()
+            {
+                
+            }
         </script>
     </head>
     <body data-layout="sz:'fullpage'">
@@ -42,81 +55,81 @@
                         <div style="border:1px solid black;padding:5px;margin:5px;">ciao</div>
                         <div style="border:1px solid black;padding:5px;margin:5px;">mondo</div>
                     </div>
-					<div data-layout="w:300,title:'tree', sz:'tree'">
-						<ul class="tree">
-							<li>Animals
-								<ul>
-									<li>Birds</li>
-									<li>Mammals
-										<ul>
-											<li>Elephant
-												<ul>
-													<li>List item 1</li>
-													<li>List item 2</li>
-													<li>List item 3
-														<ul>
-															<li>List item 3.1</li>
-															<li>List item 3.2</li>
-															<li>List item 3.3
-																<ul>
-																	<li>List item 3.3.1</li>
-																</ul>
-															</li>
-															<li>List item 3.4</li>
-														</ul>
-													</li>
-													<li>List item 4</li>
-													<li>List item 6
-														<ul>
-															<li>List item 6.1</li>
-															<li>List item 6.2
-																<ul>
-																	<li>List item 6.2.1</li>
-																	<li>List item 6.2.2</li>
-																</ul>
-															</li>
-															<li>List item 6.3</li>
-															<li>List item 6.4</li>
-															<li>List item 6.5
-																<ul>
-																	<li>List item 6.5.1</li>
-																	<li>List item 6.5.2
-																		<ul>
-																			<li>List item 6.5.2.1</li>
-																			<li>List item 6.5.2.2</li>
-																		</ul>
-																	</li>
-																	<li>List item 6.5.3</li>
-																	<li>List item 6.5.4</li>
-																</ul>
-															</li>
-														</ul>
-													</li>
-													<li>List item 7</li>
-													<li>List item 8</li>
-													<li>List item 9</li>
-													<li>List item 10</li>
-												</ul>
-											</li>
-											<li>Mouse</li>
-										</ul>
-									</li>
-									<li>Reptiles</li>
-								</ul>
-							</li>
-							<li>Plants
-								<ul>
-									<li>Flowers
-										<ul>
-											<li>Rose</li>
-											<li>Tulip</li>
-										</ul>
-									</li>
-									<li>Trees</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
+                    <div data-layout="w:300,title:'tree', sz:'tree'">
+                        <ul class="tree">
+                            <li>Animals
+                                <ul>
+                                    <li>Birds</li>
+                                    <li>Mammals
+                                        <ul>
+                                            <li>Elephant
+                                                <ul>
+                                                    <li>List item 1</li>
+                                                    <li>List item 2</li>
+                                                    <li>List item 3
+                                                        <ul>
+                                                            <li>List item 3.1</li>
+                                                            <li>List item 3.2</li>
+                                                            <li>List item 3.3
+                                                                <ul>
+                                                                    <li>List item 3.3.1</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>List item 3.4</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>List item 4</li>
+                                                    <li>List item 6
+                                                        <ul>
+                                                            <li>List item 6.1</li>
+                                                            <li>List item 6.2
+                                                                <ul>
+                                                                    <li>List item 6.2.1</li>
+                                                                    <li>List item 6.2.2</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>List item 6.3</li>
+                                                            <li>List item 6.4</li>
+                                                            <li>List item 6.5
+                                                                <ul>
+                                                                    <li>List item 6.5.1</li>
+                                                                    <li>List item 6.5.2
+                                                                        <ul>
+                                                                            <li>List item 6.5.2.1</li>
+                                                                            <li>List item 6.5.2.2</li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li>List item 6.5.3</li>
+                                                                    <li>List item 6.5.4</li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>List item 7</li>
+                                                    <li>List item 8</li>
+                                                    <li>List item 9</li>
+                                                    <li>List item 10</li>
+                                                </ul>
+                                            </li>
+                                            <li>Mouse</li>
+                                        </ul>
+                                    </li>
+                                    <li>Reptiles</li>
+                                </ul>
+                            </li>
+                            <li>Plants
+                                <ul>
+                                    <li>Flowers
+                                        <ul>
+                                            <li>Rose</li>
+                                            <li>Tulip</li>
+                                        </ul>
+                                    </li>
+                                    <li>Trees</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div data-layout="p:1,sz:'split',dir:'v'">
                     <div data-layout="sz:'split',dir:'h',splitpos:150">
@@ -173,7 +186,11 @@
                         <div>close me</div>
                     </div>
                     <div id="flap" data-layout="sz:'tabs',dir:'right',p:1" style="border:1px solid lightgrey;margin:2px;">
-                        <div>first</div>
+                        <div>first
+                        
+                            <button  onclick="createSimpleDialog()">CREATE SIMPLE DIALOG</button>
+                            <button  onclick="createComplexDialogDialog()">CREATE COMPLEX DIALOG</button>
+                        </div>
                         <div>second</div>
                         <div>third</div>
                         <div>fourth</div>

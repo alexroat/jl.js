@@ -111,7 +111,9 @@ jl.setStyle = function (e, style) {
     for (var s in style)
         try
         {
-            e.style[s] = style[s];
+            var v = style[s];
+            v = isNaN(v)||s=="z-index"? v : v + "px";
+            e.style[s] = v;
         }
         catch (ex) {
             console.log(ex);
@@ -119,7 +121,7 @@ jl.setStyle = function (e, style) {
 };
 //set style in order to fit the parent
 jl.setFillParent = function (e) {
-    jl.setStyle(e, {position: "absolute", top: "0px", bottom: "0px", left: "0px", right: "0px"});
+    jl.setStyle(e, {position: "absolute", top: 0, bottom: 0, left: 0, right: 0});
 };
 //test if element has class cls
 jl.hasClass = function (e, cls) {
@@ -143,6 +145,25 @@ jl.toggleClass = function (e, cls, b)
             cl.splice(i);
     e.className = cl.join(' ');
 };
+
+//build recursively a dom node from JS object format
+jl.build = function (obj)
+{
+    if (typeof obj === 'string' || obj instanceof String)
+        return document.createTextNode(obj);
+    var e = jl.create(obj.tag || "div", obj.attr || {});
+    var cl = obj.children || [];
+    for (var i = 0; i < cl.length; i++)
+        e.appendChild(jl.build(cl[i]));
+    return e;
+}
+//vonvert object to Layout string
+jl.toLayout = function (obj)
+{
+    var r = JSON.stringify(obj);
+    return r.substr(1, r.length - 2);
+}
+
 //bind event
 jl.bindEvent = function (el, ev, fn) {
     var evl = ev.split(' ');
@@ -244,7 +265,7 @@ jl.setSizes = function (e, r)
     var ss = ["width", "height", "borderLeft", "borderRight", "borderTop", "borderBottom", "paddingLeft", "paddingRight", "paddingTop", "paddingBottom", "marginLeft", "marginRight", "marginTop", "marginBottom"];
     for (var i = 0; i < ss.length; i++)
         if (r[ss[i]] !== undefined)
-            ns[ss[i]] = r[ss[i]] + "px";
+            ns[ss[i]] = r[ss[i]];
     if (r["position"])
         ns["position"] = r["position"];
     jl.setStyle(e, ns);
@@ -261,10 +282,10 @@ jl.fn = {};
 //------------------
 //fullpage : all children fill page
 jl.fn.fullpage = function (e) {
-    jl.setStyle(e, {position: "fixed", top: "0px", bottom: "0px", left: "0px", right: "0px"});
+    jl.setStyle(e, {position: "fixed", top: 0, bottom: 0, left: 0, right: 0});
     var cc = jl.children(e);
     for (var i = 0; i < cc.length; i++)
-        jl.setStyle(cc[i], {position: "absolute", top: "0px", bottom: "0px", left: "0px", right: "0px"});
+        jl.setStyle(cc[i], {position: "absolute", top: 0, bottom: 0, left: 0, right: 0});
     if (!e._jlcfg)
     {
         e._jlcfg = {};
@@ -284,18 +305,18 @@ jl.fn.dialog = function (e) {
     ll.w = ll.w || 200;
     ll.h = ll.h || 200;
     var g = 4;//bordo
-    jl.setStyle(e, {position: "fixed", top: ll.y + "px", left: ll.x + "px", width: jl.clip(ll.w) + "px", height: jl.clip(ll.h) + "px", background: "white",overflow: "auto", "border-radius": "5px", "z-index": (jl.focused == e ? 10 : 1)});
+    jl.setStyle(e, {position: "fixed", top: ll.y , left: ll.x , width: jl.clip(ll.w) , height: jl.clip(ll.h) , background: "white", overflow: "auto", "border-radius": 5, "z-index": (jl.focused == e ? 10 : 1)});
 
     if (!e._jlcfg)
     {
         jl.toggleClass(e, "dialog", true);
-        
+
         e._jlcfg = {};
         e._jlcfg.header = jl.create("div");
         e.appendChild(e._jlcfg.header);
         jl.toggleClass(e._jlcfg.header, "dialogheader jlexclude", true);
         jl.setText(e._jlcfg.header, ll.title || "dialog");
-        jl.setStyle(e._jlcfg.header, {position: "absolute", top: "0px", left: "0px", right: "0px"});
+        jl.setStyle(e._jlcfg.header, {position: "absolute", top: 0, left: 0, right: 0});
         var cc = jl.children(e);
         var testb = function (evt) {
             var test = 0;
@@ -312,7 +333,7 @@ jl.fn.dialog = function (e) {
             var c = cc[i];
             if (c === e._jlcfg.header)
                 continue;
-            jl.setStyle(c, {position: "absolute", top: e._jlcfg.header.offsetHeight + "px", bottom: "0px", left: "0px", right: "0px", overflow: "auto"});
+            jl.setStyle(c, {position: "absolute", top: e._jlcfg.header.offsetHeight , bottom: 0, left: 0, right: 0, overflow: "auto"});
         }
         jl.bindEvent(e._jlcfg.header, "mousedown", function (evt) {
             var d = {left: evt.pageX - ll.x, top: evt.pageY - ll.y};
@@ -378,37 +399,40 @@ jl.fn.dialog = function (e) {
             jl.preventEvent(evt);
             jl.stopEvent(evt);
         });
-        
-        
-        
+
+
+
         //crea il buttonslot
-        var bs=jl.create("div");
-        jl.setStyle(bs,{position:"absolute",right:"0px",top:"0px"})
+        var bs = jl.create("div");
+        jl.setStyle(bs, {position: "absolute", right: 0, top: 0})
         e._jlcfg.header.appendChild(bs);
-        
-        
-        var addBtn=function(title,fn,bgcolor)
+
+
+        var addBtn = function (title, fn, bgcolor)
         {
-            var b=jl.create("div");
-            jl.setText(b,title);
-            jl.setStyle(b,{background:bgcolor,border:"1px solid black", width:"18px",height:"18px",margin:"0px","text-align":"center",display:"inline-block"})
-            jl.bindEvent(b,"click",fn);
+            var b = jl.create("div");
+            jl.setText(b, title);
+            jl.setStyle(b, {background: bgcolor, border: "1px solid black", width: 18, height: 18, margin: 0, "text-align": "center", display: "inline-block"})
+            jl.bindEvent(b, "click", fn);
             bs.appendChild(b);
         }
-        
-        
-        
+
+
+
         //crea i pulsanti
-        addBtn("×",function(){jl.delete(e);},"salmon");
-        
-    };
+        addBtn("×", function () {
+            jl.delete(e);
+        }, "salmon");
+
+    }
+    ;
 
 };
 //fitme : all children fit parent
 jl.fn.fitme = function (e) {
     var cc = jl.children(e);
     for (var i = 0; i < cc.length; i++)
-        jl.setStyle(cc[i], {position: "absolute", top: "0px", bottom: "0px", left: "0px", right: "0px"});
+        jl.setStyle(cc[i], {position: "absolute", top: 0, bottom: 0, left: 0, right: 0});
 };
 //box : all children handled by weight p and minimum size s
 jl.fn.box = function (e) {
@@ -438,9 +462,9 @@ jl.fn.box = function (e) {
             s += ds >= 0 ? ds : 0;
         }
         if (ll.dir === "h")
-            jl.setStyle(cc[i], {position: "absolute", top: "0px", bottom: "0px", left: offset + "px", width: jl.clip(s - cs.deltaWidth) + "px"});
+            jl.setStyle(cc[i], {position: "absolute", top: 0, bottom: 0, left: offset , width: jl.clip(s - cs.deltaWidth) });
         else
-            jl.setStyle(cc[i], {position: "absolute", left: "0px", right: "0px", top: offset + "px", height: jl.clip(s - cs.deltaHeight) + "px"});
+            jl.setStyle(cc[i], {position: "absolute", left: 0, right: 0, top: offset , height: jl.clip(s - cs.deltaHeight) });
         offset += s;
     }
 };
@@ -484,17 +508,17 @@ jl.fn.split = function (e) {
     {
         var c0w = ll.splitpos - c0s.deltaWidth;
         var c1w = s.width - ll.splitpos - ll.splitsize - c1s.deltaWidth;
-        jl.setStyle(c0, {overflow: "auto", position: "absolute", top: "0px", bottom: "0px", left: "0px", width: jl.clip(c0w) + "px", display: (c0w < 0 ? "none" : "block")});
-        jl.setStyle(c1, {overflow: "auto", position: "absolute", top: "0px", bottom: "0px", right: "0px", width: jl.clip(c1w) + "px", display: (c1w < 0 ? "none" : "block")});
-        jl.setStyle(e._jlcfg.bar, {position: "absolute", top: "0px", bottom: "0px", width: jl.clip(ll.splitsize) + "px", left: ll.splitpos + "px", cursor: "ew-resize"});
+        jl.setStyle(c0, {overflow: "auto", position: "absolute", top: 0, bottom: 0, left: 0, width: jl.clip(c0w) , display: (c0w < 0 ? "none" : "block")});
+        jl.setStyle(c1, {overflow: "auto", position: "absolute", top: 0, bottom: 0, right: 0, width: jl.clip(c1w) , display: (c1w < 0 ? "none" : "block")});
+        jl.setStyle(e._jlcfg.bar, {position: "absolute", top: 0, bottom: 0, width: jl.clip(ll.splitsize) , left: ll.splitpos , cursor: "ew-resize"});
     }
     else
     {
         var c0h = ll.splitpos - c0s.deltaHeight;
         var c1h = s.height - ll.splitpos - ll.splitsize - c1s.deltaHeight;
-        jl.setStyle(c0, {overflow: "auto", position: "absolute", top: "0px", left: "0px", right: "0px", height: jl.clip(c0h) + "px", display: (c0h < 0 ? "none" : "block")});
-        jl.setStyle(c1, {overflow: "auto", position: "absolute", bottom: "0px", left: "0px", right: "0px", height: jl.clip(c1h) + "px", display: (c1h < 0 ? "none" : "block")});
-        jl.setStyle(e._jlcfg.bar, {position: "absolute", left: "0px", right: "0px", height: jl.clip(ll.splitsize) + "px", top: ll.splitpos + "px", cursor: "ns-resize"});
+        jl.setStyle(c0, {overflow: "auto", position: "absolute", top: 0, left: 0, right: 0, height: jl.clip(c0h) , display: (c0h < 0 ? "none" : "block")});
+        jl.setStyle(c1, {overflow: "auto", position: "absolute", bottom: 0, left: 0, right: 0, height: jl.clip(c1h) , display: (c1h < 0 ? "none" : "block")});
+        jl.setStyle(e._jlcfg.bar, {position: "absolute", left: 0, right: 0, height: jl.clip(ll.splitsize) , top: ll.splitpos , cursor: "ns-resize"});
     }
 
 };
@@ -512,7 +536,7 @@ jl.fn.tabs = function (e) {
         e._jlcfg.header = header;
         e.appendChild(e._jlcfg.header);
         jl.toggleClass(e._jlcfg.header, "jlexclude tabheader", true);
-        var hstyle = {"top": "0px", "left": "0px", "bottom": "0px", "right": "0px", "position": "absolute"};
+        var hstyle = {"top": 0, "left": 0, "bottom": 0, "right": 0, "position": "absolute"};
         delete hstyle[{"top": "bottom", "left": "right", "bottom": "top", "right": "left"}[ll.dir]];
         jl.setStyle(header, hstyle);
         for (var i = 0; i < e._jlcfg.cc.length; i++)
@@ -536,8 +560,8 @@ jl.fn.tabs = function (e) {
 
     }
     var hs = jl.getSizes(e._jlcfg.header);
-    var cstyle = {"top": "0px", "left": "0px", "bottom": "0px", "right": "0px", "position": "absolute"};
-    cstyle[ll.dir] = {"top": hs.totHeight, "left": hs.totWidth, "bottom": hs.totHeight, "right": hs.totWidth}[ll.dir] + "px";
+    var cstyle = {"top": 0, "left": 0, "bottom": 0, "right": 0, "position": "absolute"};
+    cstyle[ll.dir] = {"top": hs.totHeight, "left": hs.totWidth, "bottom": hs.totHeight, "right": hs.totWidth}[ll.dir] ;
     for (var i = 0; i < e._jlcfg.cc.length; i++)
     {
         var c = e._jlcfg.cc[i];
@@ -562,7 +586,7 @@ jl.fn.flaps = function (e) {
         e._jlcfg.header = header;
         e.appendChild(e._jlcfg.header);
         jl.toggleClass(e._jlcfg.header, "jlexclude tabheader", true);
-        var hstyle = {"top": "0px", "left": "0px", "bottom": "0px", "right": "0px", "position": "absolute"};
+        var hstyle = {"top": 0, "left": 0, "bottom": 0, "right": 0, "position": "absolute"};
         delete hstyle[{"top": "bottom", "left": "right", "bottom": "top", "right": "left"}[ll.dir]];
         jl.setStyle(header, hstyle);
         for (var i = 0; i < e._jlcfg.cc.length; i++)
@@ -591,8 +615,8 @@ jl.fn.flaps = function (e) {
     }
 
     var hs = jl.getSizes(e._jlcfg.header);
-    var cstyle = {"top": "0px", "left": "0px", "bottom": "0px", "right": "0px", "position": "absolute"};
-    cstyle[ll.dir] = {"top": hs.totHeight, "left": hs.totWidth, "bottom": hs.totHeight, "right": hs.totWidth}[ll.dir] + "px";
+    var cstyle = {"top": 0, "left": 0, "bottom": 0, "right": 0, "position": "absolute"};
+    cstyle[ll.dir] = {"top": hs.totHeight, "left": hs.totWidth, "bottom": hs.totHeight, "right": hs.totWidth}[ll.dir] ;
     //delete cstyle[{"top":"bottom","left":"right","bottom":"top","right":"left"}[ll.dir]];
 
     var esize = parseInt(cstyle[ll.dir]);
@@ -647,10 +671,10 @@ jl.fn.sequence = function (e) {
     {
         var c = cc[i];
         jl.setStyle(c, {"display": (ll.sel === i ? "block" : "none")});
-        jl.setStyle(c, {position: "absolute", top: "0px", bottom: "0px", left: "0px", right: "0px"});
+        jl.setStyle(c, {position: "absolute", top: 0, bottom: 0, left: 0, right: 0});
         var cmdtop = (e.offsetHeight - e._jlcfg.prev.offsetHeight) / 2;
-        jl.setStyle(e._jlcfg.prev, {position: "absolute", top: cmdtop + "px", left: "3px"});
-        jl.setStyle(e._jlcfg.next, {position: "absolute", top: cmdtop + "px", right: "3px"});
+        jl.setStyle(e._jlcfg.prev, {position: "absolute", top: cmdtop , left: 3});
+        jl.setStyle(e._jlcfg.next, {position: "absolute", top: cmdtop , right: 3});
     }
 };
 
@@ -664,7 +688,7 @@ jl.fn.crumb = function (e) {
         e._jlcfg.flaps = [];
         e._jlcfg.header = jl.create("div");
         jl.toggleClass(e._jlcfg.header, "jlexclude", true);
-        jl.setStyle(e._jlcfg.header, {display: "inline-block", position: "absolute", bottom: 0 + "px", "z-index": 1});
+        jl.setStyle(e._jlcfg.header, {display: "inline-block", position: "absolute", bottom: 0 , "z-index": 1});
         e.appendChild(e._jlcfg.header);
         var cc = jl.children(e);
         for (var i = 0; i < cc.length; i++)
@@ -672,7 +696,7 @@ jl.fn.crumb = function (e) {
             var flap = jl.create("div");
             e._jlcfg.flaps.push(flap);
             jl.toggleClass(flap, "jlaccordionflap", true);
-            jl.setStyle(flap, {display: "inline-block", width: "10px", height: "10px", margin: "5px", "border-radius": "5px"});
+            jl.setStyle(flap, {display: "inline-block", width: 10, height: 10, margin: 5, "border-radius": 5});
             e._jlcfg.header.appendChild(flap);
             jl.bindEvent(flap, "click", (function (i) {
                 return function () {
@@ -689,12 +713,12 @@ jl.fn.crumb = function (e) {
         var c = cc[i];
         var issel = (i === ll.sel);
         jl.setStyle(c, {"display": (ll.sel === i ? "block" : "none")});
-        jl.setStyle(c, {position: "absolute", top: "0px", bottom: "0px", left: "0px", right: "0px"});
+        jl.setStyle(c, {position: "absolute", top: 0, bottom: 0, left: 0, right: 0});
         var flap = e._jlcfg.flaps[i];
         jl.toggleClass(flap, "selected", issel);
     }
     var cmdtop = (e.offsetWidth - e._jlcfg.header.offsetWidth) / 2;
-    jl.setStyle(e._jlcfg.header, {display: "inline-block", position: "absolute", bottom: 0 + "px", left: cmdtop + "px"});
+    jl.setStyle(e._jlcfg.header, {display: "inline-block", position: "absolute", bottom: 0 , left: cmdtop });
 };
 
 //accordion : set children in an accordion
@@ -736,11 +760,11 @@ jl.fn.accordion = function (e)
         var f = e._jlcfg.flaps[i];
         var issel = (i === ll.sel);
         //flap positioning
-        jl.setStyle(f, {position: "absolute", top: offs + "px", left: "0px", right: "0px", cursor: "pointer"});
+        jl.setStyle(f, {position: "absolute", top: offs , left: 0, right: 0, cursor: "pointer"});
         offs += jl.getSizes(f).totHeight;
         //child positioning
-        var s = {position: "absolute", top: offs + "px", left: "0px", right: "0px"};
-        s.height = jl.clip(issel ? (h - jl.getSizes(c).deltaHeight) : 0) + "px";
+        var s = {position: "absolute", top: offs , left: 0, right: 0};
+        s.height = jl.clip(issel ? (h - jl.getSizes(c).deltaHeight) : 0) ;
         s.display = (issel ? "block" : "none");
         jl.setStyle(c, s);
         offs += (issel ? h : 0);
@@ -777,7 +801,7 @@ jl.fn.snap = function (e)
             oy += maxny;
             maxny = cll.ny;
         }
-        jl.setStyle(c, {position: "absolute", left: (ox * dw + ll.marginx) + "px", top: (oy * dh + ll.marginy) + "px", width: jl.clip(cll.nx * dw - 2 * ll.marginx - cs.deltaWidth) + "px", height: jl.clip(cll.ny * dh - 2 * ll.marginy - cs.deltaHeight) + "px"});
+        jl.setStyle(c, {position: "absolute", left: (ox * dw + ll.marginx) , top: (oy * dh + ll.marginy) , width: jl.clip(cll.nx * dw - 2 * ll.marginx - cs.deltaWidth) , height: jl.clip(cll.ny * dh - 2 * ll.marginy - cs.deltaHeight) });
         maxny = cll.ny > maxny ? cll.ny : maxny;
         ox = nox;
     }
@@ -822,7 +846,7 @@ jl.fn.smart = function (e)
                             map[((ix + tx) + "," + (iy + ty))] = 1;
                     go = false;
 
-                    jl.setStyle(c, {position: "absolute", left: (ix * dw + ll.marginx) + "px", top: (iy * dh + ll.marginy) + "px", width: jl.clip(cll.nx * dw - 2 * ll.marginx - cs.deltaWidth) + "px", height: jl.clip(cll.ny * dh - 2 * ll.marginy - cs.deltaHeight) + "px"});
+                    jl.setStyle(c, {position: "absolute", left: (ix * dw + ll.marginx) , top: (iy * dh + ll.marginy) , width: jl.clip(cll.nx * dw - 2 * ll.marginx - cs.deltaWidth) , height: jl.clip(cll.ny * dh - 2 * ll.marginy - cs.deltaHeight) });
 
 
                 }
@@ -841,7 +865,7 @@ jl.fn.closable = function (e)
         var btn = jl.create("div");
         jl.setText(btn, "×");
         e.appendChild(btn);
-        jl.setStyle(btn, {position: "absolute", top: "0px", right: "0px", padding: "3px", width: "15px", height: "15px", "text-align": "center", "vertical-align": "middle", cursor: "pointer"});
+        jl.setStyle(btn, {position: "absolute", top: 0, right: 0, padding: 3, width: 15, height: 15, "text-align": "center", "vertical-align": "middle", cursor: "pointer"});
         jl.bindEvent(btn, "click", function () {
             e.parentNode.removeChild(e);
             jl(e.parentNode);
@@ -857,7 +881,7 @@ jl.fn.backdrop = function (e)
         e._jlcfg = {};
         e._jlcfg.flaps = [];
         e._jlcfg.cc = jl.children(e);
-        var es = {position: "fixed", top: "0px", bottom: "0px", left: "0px", right: "0px", "background-color": "rgba(10, 10, 10, 0.8)", "z-index": 90};
+        var es = {position: "fixed", top: 0, bottom: 0, left: 0, right: 0, "background-color": "rgba(10, 10, 10, 0.8)", "z-index": 90};
         jl.setStyle(e, es);
         jl.bindEvent(e, "click", function () {
             e.parentNode.removeChild(e);
