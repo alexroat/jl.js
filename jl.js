@@ -251,13 +251,16 @@ jl.getSizes = function (e)
         marginTop: parseInt(s.marginTop) || 0,
         marginBottom: parseInt(s.marginBottom) || 0
     };
-    r.deltaWidth = r.paddingLeft + r.borderLeft + r.marginLeft + r.paddingRight + r.borderRight + r.marginRight;
-    r.deltaHeight = r.paddingTop + r.borderTop + r.marginTop + r.paddingBottom + r.borderBottom + r.marginBottom;
-    r.totWidth = r.width + r.deltaWidth;
-    r.totHeight = r.height + r.deltaHeight;
+    r.innerWidth = r.width - r.paddingLeft - r.paddingRight;
+    r.innerHeight = r.height - r.paddingTop - r.paddingBottom;
+    r.outerWidth = r.width + r.borderLeft + r.borderRight;
+    r.outerHeight = r.height + r.borderTop + r.borderBottom;
+    r.totWidth = r.outerWidth + r.marginLeft + r.marginRight;
+    r.totHeight = r.outerHeight + r.marginTop + r.marginBottom;
+    r.deltaWidth = r.totWidth - r.innerWidth;
+    r.deltaHeight = r.totHeight - r.innerHeight;
     return r;
 };
-
 //set the size in pixels
 jl.setSizes = function (e, r)
 {
